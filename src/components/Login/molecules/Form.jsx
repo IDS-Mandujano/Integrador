@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 
 function Form() {
+
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({ username: '', password: '' })
 
     const handleInputChange = (e) => {
@@ -27,7 +30,13 @@ function Form() {
         })
         .then(data => {
             const rol = data.role
-            console.log(rol)
+            if(rol==1){
+                console.log("Welcome Studen")
+            }else {
+                alert(`Bienvenido ${data.username}`)
+                navigate("/Home")
+            }
+
         })
         .catch(error => {
             console.log("Error durante la solicitud fetch: ", error)

@@ -1,15 +1,17 @@
 import './App.css'
-import Header from './components/Header/organisms/Header'
+import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 
 function App() {
 
   return (
-    <>
-    <Header></Header>
-    <Home/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Login/>}/>
+        <Route path='/Home' element={<Home/>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
