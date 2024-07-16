@@ -1,4 +1,4 @@
-import DetailsGroup from "../components/Alumno/organisms/DetailsGroup"
+import DetailsGroup from "../components/Administrador/Alumno/organisms/DetailsGroup"
 
 function GroupDetail(){
     return (

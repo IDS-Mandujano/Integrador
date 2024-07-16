@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Title from "../../Login/atoms/Title";
+import Title from "../atoms/Title";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
