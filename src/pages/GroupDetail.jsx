@@ -1,11 +1,15 @@
-import DetailsGroup from "../components/Administrador/Alumno/organisms/DetailsGroup"
+import DetailsGroup from "../components/Administrador/Alumno/organisms/DetailsGroup";
+import Header from "../components/Header/organisms/Header";
 
-function GroupDetail(){
+function GroupDetail() {
     return (
-        <div className="flex w-full h-svh items-center justify-center bg-gray-400">
-            <DetailsGroup/>
+        <div className="flex flex-col w-full h-screen">
+            <Header className="w-full" />
+            <div className="flex w-full h-full items-center justify-center">
+                <DetailsGroup />
+            </div>
         </div>
-    )
+    );
 }
 
-export default GroupDetail
+export default GroupDetail;

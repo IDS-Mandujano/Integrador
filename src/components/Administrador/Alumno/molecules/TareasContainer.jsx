@@ -9,7 +9,7 @@ function TareasContainer({ title, description }) {
                 <Text text={description} className="text-sm text-gray-500" />
             </div>
             <div className="flex gap-2">
-                <Button text="Editar" className="bg-blue-500 text-white px-4 py-2 rounded-md" />
+                <Button text="Editar" className="bg-teal-500 text-white px-4 py-2 rounded-md" />
                 <Button text="Eliminar" className="bg-red-500 text-white px-4 py-2 rounded-md" />
             </div>
         </div>

@@ -40,7 +40,7 @@ function SectionTareas() {
                 title = {item.Tema}
                 description={item.Descripcion}/>)}
                 <div className="flex justify-end gap-2 mt-4 mr-4">
-                    <Button text="Agregar Tarea" className="bg-green-500 text-white px-4 py-2 rounded-md" />
+                    <Button text="Agregar Tarea" className="bg-teal-600 text-white px-4 py-2 rounded-md" />
                     <Button text="Calificar" className="bg-yellow-500 text-white px-4 py-2 rounded-md" />
                 </div>
             </div>
