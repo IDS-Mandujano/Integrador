@@ -1,5 +1,5 @@
-function Image({ image, className }) {
-    return <img src={image} alt="Imagen del alumno" className={className} />;
+function Image({ src, className }) {
+  return <img src={src} className={className} />;
 }
 
 export default Image;

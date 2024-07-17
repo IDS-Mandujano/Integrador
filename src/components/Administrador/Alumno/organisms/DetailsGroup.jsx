@@ -3,12 +3,10 @@ import SectionTareas from "../molecules/SectionTareas";
 
 function DetailsGroup() {
     return (
-        <div className="flex w-11/12 h-screen items-center justify-evenly bg-white p-4">
-            <div className="flex justify-center w-2/5 h-5/6 shadow-md rounded border-4 hover:border-teal-600 duration-300">
-                <SectionAlumnos />
-            </div>
-            <div className="flex justify-center w-2/5 h-5/6 shadow-md rounded border-4 hover:border-teal-600 duration-300">
-                <SectionTareas />
+        <div className="flex justify-center items-center h-full">
+            <div className="flex flex-col w-full max-w-4xl space-y-8">
+                <SectionAlumnos/>
+                <SectionTareas/>
             </div>
         </div>
     );
