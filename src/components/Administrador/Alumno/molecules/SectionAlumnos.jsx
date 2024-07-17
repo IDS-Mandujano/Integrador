@@ -1,36 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Title from "../atoms/Title";
 import AlumnoContainer from "./AlumnoContainer";
 
-function SectionAlumnos() {
-    const [character, setCharacter] = useState([]);
+const initialStudents = [
+    { Nombre: 'Juan Pérez', Matricula: '123456', ImageUrl: 'vite.svg' },
+    { Nombre: 'Ana Gómez', Matricula: '654321', ImageUrl: 'vite.svg' },
+    { Nombre: 'Carlos Ruiz', Matricula: '789012', ImageUrl: 'vite.svg' },
+];
 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_LOCAL_API}/alumnos`, {
-            method: 'GET',
-            headers: {
-                'x-access-token': `${import.meta.env.VITE_TOKEN_PRUEBAS}`
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error("No fue posible comunicarse con el server");
-            }
-        })
-        .then(data => {
-            setCharacter(data || []);
-        })
-        .catch(error => {
-            console.log("Error de la petición", error);
-        });
-    }, []);
+function SectionAlumnos() {
+    const [character, setCharacter] = useState(initialStudents);
 
     return (
-        <div className="flex flex-col w-full h-full shadow-md p-4">
+        <div className="flex flex-col w-full h-full shadow-md p-4 bg-gray-50 rounded-lg">
             <div className="ml-4 mt-4">
-                <Title className="text-xl font-bold" title="Alumnos Inscritos" />
+                <Title className="text-2xl font-bold text-gray-800" title="Alumnos Inscritos" />
             </div>
             <div className="flex flex-col gap-4 mt-4 overflow-y-auto">
                 {character.map((item, index) => (
@@ -38,7 +22,7 @@ function SectionAlumnos() {
                         key={index}
                         name={item.Nombre}
                         matricula={item.Matricula}
-                        imageUrl="vite.svg"
+                        imageUrl={item.ImageUrl}
                     />
                 ))}
             </div>
