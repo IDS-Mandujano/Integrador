@@ -1,11 +1,19 @@
-import Section from "../molecules/Section"
+import Section from "../molecules/Section";
 
 function Header() {
+    const user = {
+        name: "Nombre Usuario",
+    };
+
     return (
-        <header className="flex justify-center w-full h-20 bg-teal-500 shadow-md">
-            <Section />
+        <header className="bg-teal-500 shadow-md">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-20">
+                    <Section user={user} />
+                </div>
+            </div>
         </header>
-    )
+    );
 }
 
-export default Header
+export default Header;
