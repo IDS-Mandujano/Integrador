@@ -10,7 +10,7 @@ function GrupoCard(props) {
 
     const handleInspect = (e) =>{
         e.preventDefault()
-        navigate("/Grupo/Detalles")
+        navigate("/Detalles")
         console.log("vista de detalles")
     }
 

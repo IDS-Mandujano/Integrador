@@ -12,8 +12,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/Home' element={<Home/>}/>
-        <Route path='/Grupo/Detalles' element={<GroupDetail/>}/>
-        <Route path='/Agregar/Alumno' element={<AgregarAlumno/>}/>
+        <Route path='/Detalles' element={<GroupDetail/>}/>
+        <Route path='/Agregar' element={<AgregarAlumno/>}/>
       </Routes>
     </BrowserRouter>
   )
