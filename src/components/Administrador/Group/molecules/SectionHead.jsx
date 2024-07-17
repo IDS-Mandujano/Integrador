@@ -1,16 +1,14 @@
 import Title from "../atoms/Title";
 import Text from "../atoms/Text";
-import Button from "../atoms/Button";
 
 function SectionHead() {
     return (
-        <div className="flex justify-between w-full h-full">
-            <div className="flex flex-col justify-evenly w-[50%]">
-                <Title className="font-semibold text-2xl" text="Grupos disponibles" />
-                <Text className="text-gray-800" text="Inspecciona los grupos con solo un clic" />
-            </div>
-            <div className="flex items-center justify-end w-[50%]">
-                <Button className="bg-teal-800 w-4/12 h-11 rounded text-white" text="Agregar grupo" />
+        <div className="bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center">
+                    <Title className="text-4xl leading-tight font-extrabold text-gray-900 sm:text-5xl lg:text-6xl" text="Grupos Disponibles"/>
+                    <Text className="mt-4 text-lg text-gray-700" text="Explora los grupos con un solo clic"/>
+                </div>
             </div>
         </div>
     );
