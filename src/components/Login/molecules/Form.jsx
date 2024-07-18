@@ -16,7 +16,7 @@ function Form() {
     const handleLogin = (e) => {
         e.preventDefault();
         
-        fetch(`${import.meta.env.VITE_API_URL}/login`, {
+        fetch(`${import.meta.env.VITE_LOCAL_API}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
