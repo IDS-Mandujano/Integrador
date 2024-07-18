@@ -4,7 +4,7 @@ import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import { useNavigate } from "react-router-dom";
 
-function GrupoCard() {
+function GrupoCard(props) {
     const navigate = useNavigate();
 
     const handleInspect = (e) => {
@@ -19,8 +19,8 @@ function GrupoCard() {
                 <div className="flex items-center mb-4">
                     <Image image="vite.svg" className="w-16 h-16 rounded-full mr-4" />
                     <div>
-                        <Title className="text-xl font-semibold" text="Matematicas" />
-                        <Text className="text-gray-600 text-sm">{`3 - D`}</Text>
+                        <Title className="text-xl font-semibold" text={props.text} />
+                        <Text text={`${props.grado} - ${props.grupo}`}/>
                     </div>
                 </div>
                 <div className="mb-4">

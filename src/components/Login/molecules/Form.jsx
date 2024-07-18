@@ -25,13 +25,13 @@ function Form() {
             credentials: 'include',
         })
         .then(response => {
+            const token = response.headers.get('Authorization')
+            localStorage.setItem('authToken',token)
+
             if (response.ok) return response.json();
             throw new Error('Network response was not ok.');
         })
         .then(data => {
-            const token = data.token;
-            sessionStorage.setItem('authToken', token);
-    
             const rol = data.role;
             if (rol === 1) {
                 console.log("Bienvenido Estudiante");
