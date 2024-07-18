@@ -1,4 +1,3 @@
-import React from 'react';
 import GroupContainer from "../components/UsuarioAlumno/Organisms/GroupContainer"
 import Header from "../components/Header/organisms/Header";
 
