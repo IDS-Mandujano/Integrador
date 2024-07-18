@@ -4,13 +4,16 @@ import SectionHead from "../Molecules/SectionHead";
 
 function GroupContainer() {
     const [groups, setGroups] = useState([]);
+    const token = sessionStorage.getItem('authToken')
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_LOCAL_API}/`, {
+        fetch(`${import.meta.env.VITE_API_URL}/grupos`, {
             method: 'GET',
             headers: {
-                'x-access-token': `${import.meta.env.VITE_TOKEN_PRUEBAS}`
-            }
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`
+            },
+            credentials:'include'
         })
         .then(response => {
             if (response.ok) {
