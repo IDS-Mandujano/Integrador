@@ -7,6 +7,8 @@ function Input(props) {
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
+            onBlur={props.onBlur}
+            ref = {props.ref}
         />
     );
 }
