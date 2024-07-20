@@ -6,7 +6,7 @@ const fields = [
     { label: "Contraseña", type: "password", placeholder: "******" },
     { label: "Correo", type: "email", placeholder: "correo@ejemplo.com" },
     { label: "Grupo", type: "text", placeholder: "A" },
-    { label: "Grado", type: "text", placeholder: "10" }
+    { label: "Grado", type: "text", placeholder: "6" }
 ];
 
 export default fields;
