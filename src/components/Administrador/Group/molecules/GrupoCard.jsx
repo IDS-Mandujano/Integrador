@@ -1,16 +1,20 @@
+import { useContext } from "react";
 import Title from "../atoms/Title";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import { useNavigate } from "react-router-dom";
+import GrupoContext from "../../../../context/grupoContext";
 
-function GrupoCard() {
+function GrupoCard(props) {
     const navigate = useNavigate();
+    const { setGrupos } = useContext(GrupoContext);
 
     const handleInspect = (e) => {
         e.preventDefault();
+
+        setGrupos({ grado: props.grado, grupo: props.grupo });
         navigate("/Detalles");
-        console.log("Vista de detalles");
     };
 
     return (
@@ -19,8 +23,8 @@ function GrupoCard() {
                 <div className="flex items-center mb-4">
                     <Image image="vite.svg" className="w-16 h-16 rounded-full mr-4" />
                     <div>
-                        <Title className="text-xl font-semibold" text="Matematicas" />
-                        <Text className="text-gray-600 text-sm">{`3 - D`}</Text>
+                        <Title className="text-xl font-semibold" text={props.text} />
+                        <Text text={`${props.grado} - ${props.grupo}`}/>
                     </div>
                 </div>
                 <div className="mb-4">

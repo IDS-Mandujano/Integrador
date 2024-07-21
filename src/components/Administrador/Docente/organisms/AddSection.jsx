@@ -9,7 +9,7 @@ function AddSection() {
                 <Title text="Agregar Alumno" />
                 <Text text="Llena los siguientes campos para agregar un nuevo alumno." />
             </div>
-            <FormAlumno />
+            <FormAlumno/>
         </div>
     );
 }

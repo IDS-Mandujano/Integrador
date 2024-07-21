@@ -15,37 +15,36 @@ function Form() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-      
-        fetch(`${import.meta.env.VITE_LOCAL_API}/login/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-          credentials: 'include',
+        
+        fetch(`${import.meta.env.VITE_LOCAL_API}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
+            credentials: 'include',
         })
         .then(response => {
-          if (response.ok) {
-            const authToken = response.headers.get('Authorization');
-            sessionStorage.setItem('authToken', authToken); // Guarda el token en sessionStorage u otra ubicación adecuada
-            return response.json();
-          }
-          throw new Error('Network response was not ok.');
+            const token = response.headers.get('Authorization')
+            localStorage.setItem('authToken',token)
+
+            if (response.ok) return response.json();
+            throw new Error('Network response was not ok.');
         })
         .then(data => {
-          const rol = data.role;
-          if (rol === 1) {
-            console.log("Bienvenido Estudiante");
-          } else {
-            alert(`Bienvenido ${data.username}`);
-            navigate("/Home");
-          }
+            const rol = data.role;
+            if (rol === 1) {
+                console.log("Bienvenido Estudiante");
+            } else {
+                alert(`Bienvenido ${data.username}`);
+                navigate("/Home");
+            }
         })
         .catch(error => {
-          console.log("Error durante la solicitud fetch: ", error);
-          setError("Error durante el inicio de sesión. Por favor, inténtelo de nuevo.");
+            console.log("Error durante la solicitud fetch: ", error);
+            setError("Error durante el inicio de sesión. Por favor, inténtelo de nuevo.");
         });
-      };
+    };
     
     return (
         <form className="p-6 rounded-lg w-full max-w-md mx-auto">
