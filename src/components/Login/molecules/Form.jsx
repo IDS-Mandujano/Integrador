@@ -34,10 +34,10 @@ function Form() {
         .then(data => {
             const rol = data.role;
             if (rol === 1) {
-                console.log("Bienvenido Estudiante");
+                navigate("/alumnos");
             } else {
                 alert(`Bienvenido ${data.username}`);
-                navigate("/Home");
+                navigate("/home");
             }
         })
         .catch(error => {

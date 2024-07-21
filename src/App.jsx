@@ -16,10 +16,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='/Home' element={<Home />} />
-          <Route path='/Detalles' element={<GroupDetail />} />
-          <Route path='/Agregar' element={<AgregarAlumno />} />
-          <Route path='/Home_Alumnos' element={<VistaInscritos />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/detalles' element={<GroupDetail />} />
+          <Route path='/agregar' element={<AgregarAlumno />} />
+          <Route path='/alumnos' element={<VistaInscritos />} />
         </Routes>
       </BrowserRouter>
     </GrupoContext.Provider>

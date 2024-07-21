@@ -14,7 +14,7 @@ function GrupoCard(props) {
         e.preventDefault();
 
         setGrupos({ grado: props.grado, grupo: props.grupo });
-        navigate("/Detalles");
+        navigate("/detalles");
     };
 
     return (
