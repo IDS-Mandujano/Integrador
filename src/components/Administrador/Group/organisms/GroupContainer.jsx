@@ -7,7 +7,7 @@ function GroupContainer() {
     const [localGrupos, setLocalGrupos] = useState([]);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_LOCAL_API}/grupos`, {
+        fetch(`${import.meta.env.VITE_API_URL}/grupos`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

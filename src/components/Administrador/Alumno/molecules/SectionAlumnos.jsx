@@ -11,7 +11,7 @@ function SectionAlumnos() {
   useEffect(() => {
     if (grupos && grupos.grado && grupos.grupo) {
       console.log('Enviando solicitud con:', { Grado: grupos.grado, Grupo: grupos.grupo });
-      fetch(`${import.meta.env.VITE_LOCAL_API}/alumnos/porGradoGrupo`, {
+      fetch(`${import.meta.env.VITE_API_URL}/alumnos/porGradoGrupo`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
