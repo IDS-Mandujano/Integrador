@@ -5,40 +5,31 @@ import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import DeleteModal from "../../../Templates/DeleteModal";
 import TemplateModal from "../../../Modal/organisms/TemplateModal";
+import { fetchData } from "../../../../utils/fetch";
 
 function AlumnoContainer(props) {
+  const url = `${import.meta.env.VITE_LOCAL_API}`
   const [open, setOpen] = useState(false);
   const token = localStorage.getItem('authToken');
 
-  const handleDelete = () => {
-    fetch(`${import.meta.env.VITE_LOCAL_API}/alumnos/`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${token}`
-      },
-      credentials: 'include',
-      body: JSON.stringify({ "Matricula": props.matricula })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+  const handleDelete = async () => {
+    try {
+      const response = await fetchData(`${url}/alumnos/`, 'DELETE', token, { Matricula: props.matricula });
+
+      if (response.status === 204) {
+        Swal.fire({
+          title: 'Success', text: 'El alumno ha sido eliminado de manera exitosa.', icon: 'success'
+        });        
+        props.onAlumnoEliminado(props.matricula);
+        setOpen(false);
+      } else {
+        Swal.fire("Error", "Hubo un problema al eliminar el alumno.", "error");
       }
-      return response.status === 204 ? null : response.json();
-    })
-    .then(() => {
-      Swal.fire({
-        title: 'Eliminación exitosa',
-        text: 'El alumno ha sido eliminado correctamente.',
-        icon: 'success'
-      });
-      props.onAlumnoEliminado(props.matricula);
-      setOpen(false);
-    })
-    .catch(error => {
+    } catch (error) {
+      Swal.fire("Error", "Hubo un problema al eliminar el alumno.", "error");
       console.error('Error en la solicitud:', error);
       setOpen(false);
-    });
+    }
   };
 
   return (
@@ -52,10 +43,9 @@ function AlumnoContainer(props) {
         <Button text="Editar" onClick={props.onEditar} className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-300 text-sm" />
         <Button text="Eliminar" onClick={() => setOpen(true)} className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-300 text-sm" />
         <DeleteModal open={open} onClose={() => setOpen(false)}>
-          <TemplateModal 
-            image="Icons/delete.png" title="Confirmar acción" text={`${props.name}?`} 
-            className="mx-auto my-4 w-48" onClose={()=> setOpen(false)} onDelete={handleDelete}
-          />
+          
+          <TemplateModal image="Icons/delete.png" title="Confirmar acción" text={`¿Eliminar a ${props.name}?`}
+            className="mx-auto my-4 w-48" onClose={() => setOpen(false)} onDelete={handleDelete}/>
         </DeleteModal>
       </div>
     </div>
