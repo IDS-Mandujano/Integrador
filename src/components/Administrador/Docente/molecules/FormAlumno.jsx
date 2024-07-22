@@ -4,11 +4,11 @@ import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 import fields from "../../../../data/formData";
 
-function FormAlumno() {
+function FormAlumno({ onAlumnoAdded }) {
     const token = localStorage.getItem('authToken');
 
     const [dataAlumno, setDataAlumno] = useState({
-        Matricula: '', Nombre: '', ApellidoP: '', ApellidoM: '', Edad: '', Calificacion: '', CURP: '', Contrasena: '',
+        Matricula: '', Nombre: '', ApellidoP: '', ApellidoM: '', Edad: 0, Calificacion: 0, CURP: '', Contrasena: '',
         Correo: '', Grupo: '', Grado: ''
     });
 
@@ -39,8 +39,9 @@ function FormAlumno() {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                console.log("Respuesta del servidor:", data);
+                const newAlumno = await response.json();
+                console.log("Respuesta del servidor:", newAlumno);
+                onAlumnoAdded(newAlumno);
             } else {
                 const errorData = await response.json();
                 console.error('Error en la solicitud:', errorData);
@@ -51,7 +52,7 @@ function FormAlumno() {
     };
 
     return (
-        <form onSubmit={handleAgregarAlumno} className="flex flex-wrap items-center space-x-4 p-4 bg-white rounded-lg shadow-md">
+        <form className="flex flex-wrap items-center space-x-4 p-4 bg-white rounded-lg shadow-md">
             {fields.map((field, index) => (
                 <div key={index} className="flex flex-col mb-4">
                     <Label text={field.label} />
@@ -66,7 +67,7 @@ function FormAlumno() {
                 </div>
             ))}
             <div className="mt-4 w-full">
-                <Button text="Agregar" className="w-full" />
+                <Button text="Agregar" className="w-full" onClick={handleAgregarAlumno}/>
             </div>
         </form>
     );

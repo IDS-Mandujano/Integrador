@@ -1,7 +1,7 @@
 import Title from "../atoms/Title";
 import Text from "../atoms/Text";
 
-function AlumnosCard({props}) {
+function AlumnosCard(props) {
     return (
         <div className="border p-4 rounded-lg shadow-md">
             <Title text={props.nombre} />

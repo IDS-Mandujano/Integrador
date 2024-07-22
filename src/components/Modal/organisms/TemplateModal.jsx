@@ -10,7 +10,7 @@ function TemplateModal(props) {
                 text={`Estas seguro de eliminar a ${props.text}`}
                 className={props.className}
             />
-            <ModalFooter onClose={props.onClose} />
+            <ModalFooter onClose={props.onClose} onDelete={props.onDelete} />
         </div>
     );
 }

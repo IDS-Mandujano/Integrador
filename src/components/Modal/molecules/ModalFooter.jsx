@@ -5,7 +5,7 @@ function ModalFooter(props) {
         <div className="flex gap-4">
             <Button
                 className="text-white p-2 bg-red-500 rounded-sm w-full"
-                onClick={props.onClose}
+                onClick={props.onDelete}
                 text="Delete"
             />
             <Button
