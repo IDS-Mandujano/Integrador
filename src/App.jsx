@@ -19,7 +19,7 @@ function App() {
           <Route path='/Home' element={<Home />} />
           <Route path='/Detalles' element={<GroupDetail />} />
           <Route path='/Agregar' element={<AgregarAlumno />} />
-          <Route path='/Home_Alumnos' element={<VistaInscritos />} />
+          <Route path='/Alumnos' element={<VistaInscritos />} />
         </Routes>
       </BrowserRouter>
     </GrupoContext.Provider>
