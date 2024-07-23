@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
@@ -7,7 +8,6 @@ function Form() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -16,7 +16,7 @@ function Form() {
     const handleLogin = (e) => {
         e.preventDefault();
         
-        fetch(`${import.meta.env.VITE_API_URL}/login`, {
+        fetch(`${import.meta.env.VITE_LOCAL_API}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,15 +28,26 @@ function Form() {
             const token = response.headers.get('Authorization')
             localStorage.setItem('authToken',token)
 
-            if (response.ok) return response.json();
-            throw new Error('Network response was not ok.');
+            if (response.ok) {
+                return response.json()
+            } else {
+                Swal.fire({
+                title: "Error de conexión",
+                text: "No se puede conectar a internet. Por favor, verifica tu conexión e intenta nuevamente.",
+                icon: "error"
+                });
+            }
         })
         .then(data => {
             const rol = data.role;
+            Swal.fire({
+                title: "Inicio de sesión exitoso",
+                text: "Has iniciado sesión correctamente.",
+                icon: "success"
+            });
             if (rol === 1) {
-                navigate("/Alumnos");
+                navigate("/Alumnos")
             } else {
-                alert(`Bienvenido ${data.username}`);
                 navigate("/Home");
             }
         })

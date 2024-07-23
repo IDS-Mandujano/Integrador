@@ -3,12 +3,13 @@ import Label from "../atoms/Label";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 import fields from "../../../../data/formData";
+import { fetchData } from '../../../../utils/fetch';
 
-function FormAlumno() {
+function FormAlumno({ actualizarAlumnos }) {
     const token = localStorage.getItem('authToken');
 
     const [dataAlumno, setDataAlumno] = useState({
-        Matricula: '', Nombre: '', ApellidoP: '', ApellidoM: '', Edad: '', Calificacion: '', CURP: '', Contrasena: '',
+        Matricula: '', Nombre: '', ApellidoP: '', ApellidoM: '', Edad: 0, Calificacion: 0, CURP: '', Contrasena: '',
         Correo: '', Grupo: '', Grado: ''
     });
 
@@ -23,28 +24,18 @@ function FormAlumno() {
     const handleAgregarAlumno = async (e) => {
         e.preventDefault();
 
+<<<<<<< HEAD
         const url = `${import.meta.env.VITE_API_URL}/alumnos`;
         console.log("URL de la API:", url);
+=======
+        const url = `${import.meta.env.VITE_LOCAL_API}/alumnos`;
+>>>>>>> 1c917d7c37706ce6c89d2dd47a72ae7f7ba3061d
         console.log("Datos enviados:", dataAlumno);
 
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `${token}`
-                },
-                body: JSON.stringify(dataAlumno),
-                credentials: 'include'
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Respuesta del servidor:", data);
-            } else {
-                const errorData = await response.json();
-                console.error('Error en la solicitud:', errorData);
-            }
+            const data = await fetchData(url, 'POST', token, dataAlumno);
+            console.log("Respuesta del servidor:", data);
+            actualizarAlumnos();
         } catch (error) {
             console.error('Error durante la solicitud:', error);
         }
@@ -55,13 +46,8 @@ function FormAlumno() {
             {fields.map((field, index) => (
                 <div key={index} className="flex flex-col mb-4">
                     <Label text={field.label} />
-                    <Input
-                        type={field.type}
-                        placeholder={field.placeholder}
-                        name={field.key}
-                        value={dataAlumno[field.key] || ''}
-                        onChange={handleInputChange}
-                        className="p-2 border border-gray-300 rounded-md"
+                    <Input type={field.type} placeholder={field.placeholder} name={field.key}
+                        value={dataAlumno[field.key] || ''} onChange={handleInputChange} className="p-2 border border-gray-300 rounded-md"
                     />
                 </div>
             ))}
