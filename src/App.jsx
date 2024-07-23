@@ -12,8 +12,8 @@ function App() {
   const [grupos, setGrupos] = useState({ grado: '', grupo: '' });
 
   return (
-    <BrowserRouter>
     <GrupoContext.Provider value={{ grupos, setGrupos }}>
+      <BrowserRouter>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/Home' element={<Home />} />
@@ -21,8 +21,8 @@ function App() {
           <Route path='/Agregar' element={<AgregarAlumno />} />
           <Route path='/Alumnos' element={<VistaInscritos />} />
         </Routes>
+      </BrowserRouter>
     </GrupoContext.Provider>
-    </BrowserRouter>
   )
 }
 
