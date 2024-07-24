@@ -8,8 +8,8 @@ function HeaderAlum() {
                 <div className="flex w-6/12 justify-between items-center">
                     <Image className="flex w-1/12 items-center" image="imagen-removebg-preview.png" />
                     <div className="flex w-4/5 items-center">
-                        <Image className="w-12 h-12" image="vite.svg" />
-                        <Text text="Nombre del usuario" className="text-white font-semibold" />
+                    <Image className="w-12 h-12" image="vite.svg" />
+                    <Text text={`Matrícula:         ${localStorage.getItem('Usuario')}`} className="text-white font-semibold" />
                     </div>
                 </div>
                 <div className="flex w-2/5 items-center">

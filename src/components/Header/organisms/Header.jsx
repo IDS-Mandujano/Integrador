@@ -12,6 +12,7 @@ function Header() {
                     <div className="flex w-4/5 items-center">
                         <Image className="w-12 h-12" image="vite.svg" />
                         <Text text={`${localStorage.getItem('Usuario')}`} className="text-white font-semibold" />
+                        <Text />
                     </div>
                 </div>
                 <div className="flex w-2/5 items-center">
