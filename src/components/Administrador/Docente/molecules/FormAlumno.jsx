@@ -37,7 +37,7 @@ function FormAlumno({ actualizarAlumnos }) {
     };
 
     return (
-        <form onSubmit={handleAgregarAlumno} className="flex flex-wrap items-center space-x-4 p-4 bg-white rounded-lg shadow-md">
+        <form className="flex flex-wrap items-center space-x-4 p-4 bg-white rounded-lg shadow-md">
             {fields.map((field, index) => (
                 <div key={index} className="flex flex-col mb-4">
                     <Label text={field.label} />
@@ -47,7 +47,7 @@ function FormAlumno({ actualizarAlumnos }) {
                 </div>
             ))}
             <div className="mt-4 w-full">
-                <Button text="Agregar" className="w-full" />
+                <Button text="Agregar" className="w-full" onClick={handleAgregarAlumno}/>
             </div>
         </form>
     );

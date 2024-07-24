@@ -56,18 +56,10 @@ function Form() {
     return (
         <form className="p-6 rounded-lg w-full max-w-md mx-auto">
             <div className="flex flex-col space-y-4 mb-4">
-                <Input 
-                    type="text" 
-                    name="username" 
-                    placeholder="Ingresa tu identificador" 
-                    value={formData.username} 
+                <Input type="text" name="username" placeholder="Ingresa tu identificador" value={formData.username} 
                     onChange={handleInputChange}
                 />
-                <Input 
-                    type="password" 
-                    name="password" 
-                    placeholder="Ingresa tu contraseña" 
-                    value={formData.password} 
+                <Input type="password" name="password" placeholder="Ingresa tu contraseña" value={formData.password} 
                     onChange={handleInputChange}
                 />
             </div>
