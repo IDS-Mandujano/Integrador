@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
+import UserContext from "../../../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 function Form() {
-    const navigate = useNavigate();
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -25,38 +28,30 @@ function Form() {
             credentials: 'include',
         })
         .then(response => {
-            const token = response.headers.get('Authorization')
-            localStorage.setItem('authToken',token)
-
             if (response.ok) {
-                return response.json()
+                const token = response.headers.get('Authorization');
+                localStorage.setItem('authToken', token);
+                return response.json();
             } else {
-                Swal.fire({
-                title: "Error de conexión",
-                text: "No se puede conectar a internet. Por favor, verifica tu conexión e intenta nuevamente.",
-                icon: "error"
-                });
+                throw new Error("Error de conexión");
             }
         })
         .then(data => {
-            const rol = data.role;
+            setUser({ usuario: data.username, grado: data.grado, grupo: data.grupo, role: data.role });
             Swal.fire({
                 title: "Inicio de sesión exitoso",
                 text: "Has iniciado sesión correctamente.",
                 icon: "success"
+            }).then(() => {
+                navigate('/Home');
             });
-            if (rol === 1) {
-                navigate("/Alumnos")
-            } else {
-                navigate("/Home");
-            }
         })
         .catch(error => {
             console.log("Error durante la solicitud fetch: ", error);
             setError("Error durante el inicio de sesión. Por favor, inténtelo de nuevo.");
         });
     };
-    
+
     return (
         <form className="p-6 rounded-lg w-full max-w-md mx-auto">
             <div className="flex flex-col space-y-4 mb-4">
@@ -77,7 +72,7 @@ function Form() {
             </div>
             {error && <div className="text-red-500 mb-4">{error}</div>}
             <div className="flex justify-center">
-                <Button type="submit" text="Ingresar" onClick={handleLogin}/>
+                <Button type="submit" text="Ingresar" onClick={handleLogin} />
             </div>
         </form>
     );

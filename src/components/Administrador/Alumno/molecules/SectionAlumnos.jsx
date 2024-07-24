@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import Title from "../atoms/Title";
 import AlumnoContainer from "../molecules/AlumnoContainer";
-import GrupoContext from "../../../../context/grupoContext";
 import { fetchData } from "../../../../utils/fetch";
+import UserContext from "../../../../context/userContext";
 
 function SectionAlumnos() {
   const [alumnos, setAlumnos] = useState([]);
-  const { grupos } = useContext(GrupoContext);
+  const { grupos } = useContext(UserContext);
 
   const url = `${import.meta.env.VITE_LOCAL_API}/alumnos/porGradoGrupo`
   const token = localStorage.getItem('authToken');
