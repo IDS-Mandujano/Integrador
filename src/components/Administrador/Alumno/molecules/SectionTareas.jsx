@@ -11,7 +11,7 @@ function SectionTareas() {
     if (token) {
       const fetchTareas = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_LOCAL_API}/tarea`, {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/tarea`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
