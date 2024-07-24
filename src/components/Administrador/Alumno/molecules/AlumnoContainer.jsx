@@ -5,30 +5,24 @@ import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import DeleteModal from "../../../Templates/DeleteModal";
 import { fetchData } from "../../../../utils/fetch";
+import handleStatusCode from "../../../../utils/messages";
 
 function AlumnoContainer(props) {
   const url = `${import.meta.env.VITE_LOCAL_API}`;
   const [open, setOpen] = useState(false);
   const token = localStorage.getItem('authToken');
 
-  const handleUpdate = async () => {
-    try {
-      const data = await fetchData(`${url}/alumnos/`,'GET',token,dataAlumno)
-    }
-  }
-
   const handleDelete = async () => {
     try {
       const response = await fetchData(`${url}/alumnos/`, 'DELETE', token, { Matricula: props.matricula });
+      handleStatusCode(response.status);
 
       if (response.status === 204) {
-        console.log('Se elimino correctamente')
         props.onAlumnoEliminado(props.matricula);
         setOpen(false);
-      } else {
-        console.log('Error')
       }
     } catch (error) {
+      handleStatusCode(500);
       setOpen(false);
     }
   };
@@ -48,8 +42,8 @@ function AlumnoContainer(props) {
           className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-300 text-sm"
         />
       </div>
-      {open && (<DeleteModal open={open} onClose={()=>setOpen(false)} title="Eliminar Alumno" text={`¿Estas seguro de eliminar a ${props.name}?`}
-          onDelete={handleDelete}/>)}
+      {open && (<DeleteModal open={open} onClose={() => setOpen(false)} title="Eliminar Alumno" text={`¿Estas seguro de eliminar a ${props.name}?`}
+        onDelete={handleDelete} />)}
     </div>
   );
 }
