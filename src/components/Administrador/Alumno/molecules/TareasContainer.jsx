@@ -11,7 +11,7 @@ function TareasContainer(props) {
         <File path={props.path} name={props.name} />
       </div>
       <div className="flex mt-4 gap-2">
-        <Button text="Editar" onClick={props.onEditar} className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-300 text-sm" />
+        <Button text="Editar" onClick={props.onEditar} className="bg-teal-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-300 text-sm" />
         <Button text="Eliminar" onClick={props.onEliminar} className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-300 text-sm" />
       </div>
     </div>
