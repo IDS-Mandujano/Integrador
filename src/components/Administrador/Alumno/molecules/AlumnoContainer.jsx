@@ -11,24 +11,24 @@ function AlumnoContainer(props) {
   const [open, setOpen] = useState(false);
   const token = localStorage.getItem('authToken');
 
+  const handleUpdate = async () => {
+    try {
+      const data = await fetchData(`${url}/alumnos/`,'GET',token,dataAlumno)
+    }
+  }
+
   const handleDelete = async () => {
     try {
       const response = await fetchData(`${url}/alumnos/`, 'DELETE', token, { Matricula: props.matricula });
 
       if (response.status === 204) {
-        Swal.fire({
-          title: 'Success',
-          text: 'El alumno ha sido eliminado de manera exitosa.',
-          icon: 'success'
-        });
+        console.log('Se elimino correctamente')
         props.onAlumnoEliminado(props.matricula);
         setOpen(false);
       } else {
-        Swal.fire("Error", "Hubo un problema al eliminar el alumno.", "error");
+        console.log('Error')
       }
     } catch (error) {
-      Swal.fire("Error", "Hubo un problema al eliminar el alumno.", "error");
-      console.error('Error en la solicitud:', error);
       setOpen(false);
     }
   };

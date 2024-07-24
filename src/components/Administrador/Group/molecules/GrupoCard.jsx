@@ -1,19 +1,16 @@
-import { useContext } from "react";
 import Title from "../atoms/Title";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../../../../context/userContext";
 
 function GrupoCard(props) {
     const navigate = useNavigate();
-    const { setUser } = useContext(UserContext);
 
     const handleInspect = (e) => {
         e.preventDefault();
-
-        setUser({ grado: props.grado, grupo: props.grupo });
+        sessionStorage.setItem('Grado',props.grado)
+        sessionStorage.setItem('Grupo',props.grupo)
         navigate("/Detalles");
     };
 
