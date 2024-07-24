@@ -1,6 +1,4 @@
 import Title from "../Atoms/Title";
-import Text from "../Atoms/Text";
-import Button from "../Atoms/Button";
 
 function SectionHead() {
     return (

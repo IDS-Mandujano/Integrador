@@ -1,10 +1,10 @@
 import GroupContainer from "../components/UsuarioAlumno/Organisms/GroupContainer"
-import Header from "../components/Header/organisms/Header";
+import HeaderAlum from "../components/UsuarioAlumno/HeaderAlumno/Organisms/HeaderAlum";
 
 function VistaInscritos(){
     return(
     <div className="min-h-screen bg-gray-100">
-        <Header className="w-full" />
+        <HeaderAlum/>
         <div className="container mx-auto p-4">
             <GroupContainer/>
         </div>
