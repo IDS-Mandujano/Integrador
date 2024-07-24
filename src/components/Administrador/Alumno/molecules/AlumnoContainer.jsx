@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Swal from "sweetalert2";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import DeleteModal from "../../../Templates/DeleteModal";
 import { fetchData } from "../../../../utils/fetch";
+import handleStatusCode from "../../../../utils/messages";
 
 function AlumnoContainer(props) {
   const url = `${import.meta.env.VITE_LOCAL_API}`;
@@ -14,21 +14,14 @@ function AlumnoContainer(props) {
   const handleDelete = async () => {
     try {
       const response = await fetchData(`${url}/alumnos/`, 'DELETE', token, { Matricula: props.matricula });
+      handleStatusCode(response.status);
 
       if (response.status === 204) {
-        Swal.fire({
-          title: 'Success',
-          text: 'El alumno ha sido eliminado de manera exitosa.',
-          icon: 'success'
-        });
         props.onAlumnoEliminado(props.matricula);
         setOpen(false);
-      } else {
-        Swal.fire("Error", "Hubo un problema al eliminar el alumno.", "error");
       }
     } catch (error) {
-      Swal.fire("Error", "Hubo un problema al eliminar el alumno.", "error");
-      console.error('Error en la solicitud:', error);
+      handleStatusCode(500);
       setOpen(false);
     }
   };
@@ -48,8 +41,8 @@ function AlumnoContainer(props) {
           className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-300 text-sm"
         />
       </div>
-      {open && (<DeleteModal open={open} onClose={()=>setOpen(false)} title="Eliminar Alumno" text={`¿Estas seguro de eliminar a ${props.name}?`}
-          onDelete={handleDelete}/>)}
+      {open && (<DeleteModal open={open} onClose={() => setOpen(false)} title="Eliminar Alumno" text={`¿Estas seguro de eliminar a ${props.name}?`}
+        onDelete={handleDelete} />)}
     </div>
   );
 }

@@ -13,6 +13,7 @@ function AddSection() {
     const actualizarAlumnos = async () => {
         try {
             const data = await fetchData(`${import.meta.env.VITE_LOCAL_API}/alumnos`, 'GET', token);
+            console.log(data.response)
             setAlumnos(data);
         } catch (error) {
             Swal.fire({

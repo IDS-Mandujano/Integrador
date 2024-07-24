@@ -43,7 +43,6 @@ function UpdateModal({ open, onClose, onSave, data, onChange }) {
                                 onChange={(e) => onChange('email', e.target.value)}
                             />
                         </div>
-                        {/* Add more fields as needed */}
                         <div className="flex justify-end space-x-2">
                             <Button
                                 onClick={onClose}
