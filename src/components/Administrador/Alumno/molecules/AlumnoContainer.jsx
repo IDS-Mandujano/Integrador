@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Swal from "sweetalert2";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
