@@ -43,9 +43,12 @@ function Form() {
                 title: "Inicio de sesión exitoso",
                 text: "Has iniciado sesión correctamente.",
                 icon: "success"
-            }).then(() => {
-                navigate('/Home');
-            });
+            })
+            if(data.role === 1){
+                navigate("Alumno")
+            }else {
+                navigate("/Home")
+            }
         })
         .catch(error => {
             console.log("Error durante la solicitud fetch: ", error);
