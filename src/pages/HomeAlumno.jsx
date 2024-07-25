@@ -8,7 +8,8 @@ function HomeAlumno() {
   return (
     <div>
         <HeaderAlum></HeaderAlum>
-      <h1>Bienvenido  {user.username}</h1>
+      <h1>Bienvenido/a {user.username}</h1>
+
       <Dashboard />
     </div>
   );
