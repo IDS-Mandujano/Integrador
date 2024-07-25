@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import GroupDetail from './pages/GroupDetail';
 import AgregarAlumno from './pages/AgregarAlumno';
 import VistaInscritos from './pages/VistaInscritos';
+import Tareas from "./pages/Tareas"
 import RouteProtectedAdmin from './pages/RouteProtectedAdmin'
 import RouteProtectedAlumno from './pages/RouteProtectedAlumno';
 import UserContext from './context/userContext';
@@ -25,6 +26,7 @@ function App() {
           {/*</Route>*/}
           {/*<Route element={<RouteProtectedAlumno/>}>*/}
             <Route path='/Alumno' element={<VistaInscritos/>}/>
+            <Route path='/Tareas' element={<Tareas/>}/>
           {/*</Route>*/}
         </Routes>
       </UserContext.Provider>

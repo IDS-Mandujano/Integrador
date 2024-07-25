@@ -46,11 +46,12 @@ function AlumnoContainer({ matricula, imageUrl, name, onAlumnoEliminado }) {
     const { Matricula, CURP, Contrasena, ...editableData } = data;
     try {
       const response = await fetchData(`${url}/`, 'PUT', token, { ...editableData, Matricula, CURP, Contrasena });
-      console.log('Response:', response);
+      console.log('Response PUT:', response.status);
       handleStatusCode(response.status);
       if (response.status === 200) {
-        setAlumnoData(prevData => ({ ...prevData, ...editableData }));
-        setUpdateOpen(false);
+        setAlumnoData(prevData => ({ ...prevData,...editableData}));
+        setUpdateOpen(false)
+        
       }
     } catch (error) {
       console.error('Error updating student:', error);

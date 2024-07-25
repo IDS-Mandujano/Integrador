@@ -1,5 +1,6 @@
-function Input({className,type,placeholder}){
-    return <input className={className} type={type} placeholder={placeholder} />
+function  Input(props){
+    return <input className={props.className} type={props.type} 
+    placeholder={props.placeholder} onChange={props.onChange}/>
 }
 
 export default Input
