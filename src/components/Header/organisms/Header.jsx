@@ -1,8 +1,13 @@
 import Navbar from "../molecules/Navbar";
 import Image from "../atoms/Image";
 import Text from "../atoms/Text";
+import UserContext from "../../../context/userContext";
+import { useContext } from "react";
 
 function Header() {
+
+    const value = useContext(UserContext)
+    console.log(value)
 
     return (
         <header className="bg-teal-900 p-2 w-full">

@@ -43,15 +43,12 @@ function Form() {
                 title: "Inicio de sesión exitoso",
                 text: "Has iniciado sesión correctamente.",
                 icon: "success"
-            }).then(() => {
-                if(data.role == 2){
-                    navigate('/Home');
-                }
-            else {
-                navigate('/Alumnos')
+            })
+            if(data.role === 1){
+                navigate("Alumno")
+            }else {
+                navigate("/Home")
             }
-
-            });
         })
         .catch(error => {
             console.log("Error durante la solicitud fetch: ", error);
@@ -62,18 +59,10 @@ function Form() {
     return (
         <form className="p-6 rounded-lg w-full max-w-md mx-auto">
             <div className="flex flex-col space-y-4 mb-4">
-                <Input 
-                    type="text" 
-                    name="username" 
-                    placeholder="Ingresa tu identificador" 
-                    value={formData.username} 
+                <Input type="text" name="username" placeholder="Ingresa tu identificador" value={formData.username} 
                     onChange={handleInputChange}
                 />
-                <Input 
-                    type="password" 
-                    name="password" 
-                    placeholder="Ingresa tu contraseña" 
-                    value={formData.password} 
+                <Input type="password" name="password" placeholder="Ingresa tu contraseña" value={formData.password} 
                     onChange={handleInputChange}
                 />
             </div>
