@@ -44,7 +44,13 @@ function Form() {
                 text: "Has iniciado sesión correctamente.",
                 icon: "success"
             }).then(() => {
-                navigate('/Home');
+                if(data.role == 2){
+                    navigate('/Home');
+                }
+            else {
+                navigate('/Alumnos')
+            }
+
             });
         })
         .catch(error => {
