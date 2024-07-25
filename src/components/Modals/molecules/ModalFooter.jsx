@@ -1,12 +1,12 @@
 import Button from "../atoms/Button";
 
-function ModalFooter({ handleDelete, handleClose }) {
+function ModalFooter(props) {
   return (
-    <div className=" w-full flex justify-center space-x-4">
-      <Button className="bg-gray-400 text-white" text="Cancelar" onClick={handleClose}
-      />
-      <Button className="bg-red-500 text-white" text="Eliminar" onClick={handleDelete}
-      />
+    <div className="w-full flex justify-center space-x-4">
+      <Button className={props.action1S} text={props.action1} onClick={props.handleClose} />
+      <Button className={props.action2S} text={props.action2} onClick={props.handleDelete} />
+      {props.isTemario===true && (<Button className={props.action3S} 
+      text={props.action3} onClick={props.handleAdditionalAction}/>)}
     </div>
   );
 }
