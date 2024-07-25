@@ -1,85 +1,83 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
-import DeleteModal from "../../../Templates/DeleteModal";
 import { fetchData } from "../../../../utils/fetch";
 import handleStatusCode from "../../../../utils/messages";
-import ModalUpdateAlumno from "../../../Templates/ModalUpdateAlumno";
+import EditModal from "../../../Modals/organisms/EditModal";
+import DeleteModal from "../../../Modals/organisms/DeleteModal";
 
-function AlumnoContainer(props) {
-  const url = `${import.meta.env.VITE_LOCAL_API}`;
-  const [open, setOpen] = useState(false);
-  const [updateOpen, setUpdateOpen] = useState(false);
+function AlumnoContainer({ matricula, imageUrl, name, onAlumnoEliminado }) {
   const [alumnoData, setAlumnoData] = useState(null);
+  const [isUpdateOpen, setUpdateOpen] = useState(false);
+  const [isDeleteOpen, setOpen] = useState(false);
   const token = localStorage.getItem('authToken');
+  const url = `${import.meta.env.VITE_LOCAL_API}/alumnos`;
 
   useEffect(() => {
-    const fetchAlumno = async () => {
-      try {
-        const data = await fetchData(`${url}/alumnos/porId`, 'POST', token, { Matricula: props.matricula });
-        setAlumnoData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (props.matricula) {
-      fetchAlumno();
+    if (matricula) {
+      fetchData(`${url}/porId`, 'POST', token, { Matricula: matricula })
+        .then(data => {
+          setAlumnoData(data);
+        })
+        .catch(error => {
+          console.error('Error fetching student data:', error);
+          handleStatusCode(500);
+        });
     }
-  }, [props.matricula, token, url]);
+  }, [matricula, token, url]);
 
   const handleDelete = async () => {
     try {
-      const response = await fetchData(`${url}/alumnos/`, 'DELETE', token, { Matricula: props.matricula });
+      const response = await fetchData(`${url}/`, 'DELETE', token, { Matricula: matricula });
       handleStatusCode(response.status);
-
       if (response.status === 204) {
-        props.onAlumnoEliminado(props.matricula);
+        onAlumnoEliminado(matricula);
         setOpen(false);
       }
     } catch (error) {
+      console.error('Error deleting student:', error);
       handleStatusCode(500);
       setOpen(false);
     }
   };
 
+  const handleSave = async (data) => {
+    const { Matricula, CURP, Contrasena, ...editableData } = data;
+    try {
+      const response = await fetchData(`${url}/`, 'PUT', token, { ...editableData, Matricula, CURP, Contrasena });
+      console.log('Response:', response);
+      handleStatusCode(response.status);
+      if (response.status === 200) {
+        setAlumnoData(prevData => ({ ...prevData, ...editableData }));
+        setUpdateOpen(false);
+      }
+    } catch (error) {
+      console.error('Error updating student:', error);
+      handleStatusCode(500);
+      setUpdateOpen(false);
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center mb-4">
-      <Image src={props.imageUrl} className="w-24 h-24 rounded-full mb-4" />
+      <Image src={imageUrl} className="w-24 h-24 rounded-full mb-4" />
       <div className="flex-1 text-center">
-        <Text text={props.name} className="font-bold text-lg" />
-        <Text text={`Matrícula: ${props.matricula}`} className="text-sm text-gray-500" />
+        <Text text={name} className="font-bold text-lg" />
+        <Text text={`Matrícula: ${matricula}`} className="text-sm text-gray-500" />
       </div>
       <div className="flex mt-4 gap-2">
-        <Button
-          text="Editar"
-          onClick={() => setUpdateOpen(true)}
-          className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-300 text-sm"
+        <Button text="Editar" onClick={() => setUpdateOpen(true)}
+          className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors"
         />
-        <Button
-          text="Eliminar"
-          onClick={() => setOpen(true)}
-          className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-300 text-sm"
+        <Button text="Eliminar" onClick={() => setOpen(true)}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
         />
       </div>
-      {open && (
-        <DeleteModal
-          open={open}
-          onClose={() => setOpen(false)}
-          title="Eliminar Alumno"
-          text={`¿Estás seguro de eliminar a ${props.name}?`}
-          onDelete={handleDelete}
-        />
-      )}
-      {updateOpen && (
-        <ModalUpdateAlumno
-          open={updateOpen}
-          onClose={() => setUpdateOpen(false)}
-          title={`${props.name} - ${props.matricula}`}
-          data={alumnoData}
-        />
-      )}
+      <EditModal show={isUpdateOpen} handleClose={() => setUpdateOpen(false)} handleSave={handleSave} data={alumnoData}
+      />
+      <DeleteModal show={isDeleteOpen} handleClose={() => setOpen(false)} handleDelete={handleDelete} item={name}
+      />
     </div>
   );
 }

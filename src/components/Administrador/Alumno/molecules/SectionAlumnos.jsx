@@ -14,7 +14,7 @@ function SectionAlumnos() {
   useEffect(() => {
     const fetchAlumnos = async () => {
       try {
-        const data = await fetchData(url, 'POST', token, {Grado: grado, Grupo: grupo});
+        const data = await fetchData(url,'POST',token, {Grado: grado, Grupo: grupo});
         setAlumnos(data);
       } catch (error) {
         console.log('Error al obtener alumnos:', error);
@@ -38,7 +38,7 @@ function SectionAlumnos() {
         {alumnos.length > 0 ? (
           alumnos.map((item, index) => (
             <AlumnoContainer key={index} imageUrl="vite.svg" name={item.Nombre}
-              matricula={item.Matricula} onAlumnoEliminado={handleAlumnoEliminado} 
+            matricula={item.Matricula} onAlumnoEliminado={handleAlumnoEliminado} 
             />
           ))
         ) : (

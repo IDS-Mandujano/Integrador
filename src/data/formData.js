@@ -5,8 +5,8 @@ const fields = [
     { label: "Apellido M.", type: "text", placeholder: "Estrada", key: "ApellidoM" },
     { label: "Contraseña", type: "password", placeholder: "******", key: "Contrasena" },
     { label: "Correo", type: "email", placeholder: "correo@ejemplo.com", key: "Correo" },
-    { label: "Grupo", type: "text", placeholder: "A", key: "Grupo" },
-    { label: "Grado", type: "number", placeholder: "6", key: "Grado" }
+    { label: "Grado", type: "number", placeholder: "6", key: "Grado" },
+    { label: "Grupo", type: "text", placeholder: "A", key: "Grupo" }
 ];
 
 export default fields;
