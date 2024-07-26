@@ -1,22 +1,25 @@
-import { Link } from "react-router-dom";
+import { useState,useContext } from "react";
 import Image from "../atoms/Image";
+import Sidebar from "./Sidebar";
+import UserContext from "../../../context/userContext"
 
 function Navbar() {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const {user} = useContext(UserContext)
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     return (
-        <nav className="flex w-full justify-between">
-            <Link to="/Home" className="hover:opacity-75">
-                <Image className="w-10 h-10" image="Icons/home.png" />
-            </Link>
-            <Link to="#" className="hover:opacity-75">
-                <Image className="w-10 h-10" image="Icons/group_add.png" />
-            </Link>
-            <Link to="/Agregar" className="hover:opacity-75">
-                <Image className="w-10 h-10" image="Icons/person_add.png" />
-            </Link>
-            <Link to="#" className="hover:opacity-75">
-                <Image className="w-10 h-10" image="Icons/logout.png" />
-            </Link>
-        </nav>
+        <>
+            <nav className="flex w-full justify-end text-white">
+                <button onClick={toggleSidebar} className="hover:opacity-75">
+                    <Image className="w-10 h-10" image="Icons/menu.png" />
+                </button>
+            </nav>
+            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} userName={user.usuario} userImage="vite.svg"/>
+        </>
     );
 }
 

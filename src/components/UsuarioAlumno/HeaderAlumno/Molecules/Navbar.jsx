@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import Image from "../Atoms/Image";
 import Sidebar from "./Sidebar";
+import UserContext from "../../../../context/userContext"
+
 
 function Navbar() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const {user} = useContext(UserContext)
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -16,7 +19,7 @@ function Navbar() {
                     <Image className="w-10 h-10" image="Icons/menu.png" />
                 </button>
             </nav>
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} userName={user.usuario} userImage={"vite.svg"}/>
         </>
     );
 }

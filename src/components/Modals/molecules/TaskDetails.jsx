@@ -5,9 +5,9 @@ import Image from "../atoms/Image";
 function TaskDetails({ task }) {
   return (
     <div>
-      <Title title={`Tema: ${task.tema}`} />
+      <Title title={`Tema: ${task.Tema}`} />
       <Text className="text-lg mb-2" text="Descripción" />
-      <Text className="mb-4" text={task.descripcion} />
+      <Text className="mb-4" text={task.Descripcion} />
       <div className="mb-4">
         <Text className="text-lg" text={`Material: ${task.filename}`} />
         <div className="mt-2 flex justify-center">

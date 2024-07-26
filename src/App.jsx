@@ -7,8 +7,8 @@ import GroupDetail from './pages/GroupDetail';
 import AgregarAlumno from './pages/AgregarAlumno';
 import VistaInscritos from './pages/VistaInscritos';
 import Tareas from "./pages/Tareas"
-import RouteProtectedAdmin from './pages/RouteProtectedAdmin'
-import RouteProtectedAlumno from './pages/RouteProtectedAlumno';
+//import RouteProtectedAdmin from './pages/RouteProtectedAdmin'
+//import RouteProtectedAlumno from './pages/RouteProtectedAlumno';
 import UserContext from './context/userContext';
 
 function App() {
