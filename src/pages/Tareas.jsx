@@ -1,10 +1,10 @@
-import Header from "../components/Header/organisms/Header"
+import HeaderAlum from "../components/UsuarioAlumno/HeaderAlumno/Organisms/HeaderAlum"
 import AlumnoTareas from "../components/UsuarioAlumno/Tareas/organisms/AlumnoTareas"
 
 function Tareas (){
     return (
         <div>
-            <Header/>
+            <HeaderAlum/>
             <AlumnoTareas/>
         </div>
     )

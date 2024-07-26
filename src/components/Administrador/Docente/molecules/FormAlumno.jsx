@@ -24,7 +24,7 @@ function FormAlumno({ actualizarAlumnos }) {
     const handleAgregarAlumno = async (e) => {
         e.preventDefault();
 
-        const url = `${import.meta.env.VITE_LOCAL_API}/alumnos`;xº
+        const url = `${import.meta.env.VITE_LOCAL_API}/alumnos`;
         console.log("Datos enviados:", dataAlumno);
 
         try {

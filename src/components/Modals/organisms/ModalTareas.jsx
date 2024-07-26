@@ -1,7 +1,7 @@
 import { useState } from "react";
-import  Button  from "../atoms/Button";
-import  FileUpload  from "../molecules/FileUpload";
-import  TaskDetails from "../molecules/TaskDetails";
+import Button from "../atoms/Button";
+import FileUpload from "../molecules/FileUpload";
+import TaskDetails from "../molecules/TaskDetails";
 
 function ModalTareas({ task, onClose }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -18,7 +18,7 @@ function ModalTareas({ task, onClose }) {
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 relative w-96">
         <TaskDetails task={task} />
-        <FileUpload onFileChange={handleFileChange} type="file"/>
+        <FileUpload onFileChange={handleFileChange} type="file" />
         <div className="flex justify-between">
           <Button
             text="Eliminar tarea"

@@ -1,5 +1,5 @@
-function Image({ image }) {
-    return <img className="size-8" src={image} alt="Group Image" />;
+function Image(props){
+    return <img src={props.image} className={props.className}/>
 }
 
-export default Image;
+export default Image

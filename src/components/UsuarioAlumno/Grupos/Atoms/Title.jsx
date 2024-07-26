@@ -1,5 +1,5 @@
-function Title({ text, className }) {
-    return <h1 className={className}>{text}</h1>;
+function Title({text}){
+    return <h2 className="font-semibold text-xl">{text}</h2>
 }
 
-export default Title;
+export default Title

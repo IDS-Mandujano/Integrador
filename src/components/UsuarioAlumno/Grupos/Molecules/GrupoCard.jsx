@@ -1,4 +1,3 @@
-// components/molecules/GrupoCard.js
 import { useNavigate } from "react-router-dom";
 import Title from "../Atoms/Title";
 import Text from "../Atoms/Text";
@@ -15,19 +14,21 @@ function GrupoCard({ asignatura, grado, grupo, miembros }) {
     };
 
     return (
-        <div className="flex flex-col bg-white rounded-lg shadow-md p-4 w-full h-full">
-            <div className="flex ml-8 items-center h-1/4">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="p-6 flex flex-col">
+            <div className="flex items-center mb-2">
                 <Title text={asignatura} />
             </div>
             <div className="flex h-1/4">
-                <Text className="ml-8" text={`${grado} - ${grupo}`} />
+                <Text className="" text={`${grado} - ${grupo}`} />
             </div>
-            <div className="flex items-center h-1/4 ml-8">
-                <Image image="vite.svg" />
-                <Text text={`${miembros} - Miembros`} />
+            <div className="flex items-center h-1/4 mt-2">
+                <Image image="Icons/group.png" className="w-8 h-8 bg-teal-500 rounded-sm"/>
+                <Text className="ml-2" text={`Miembros: ${miembros}`} />
             </div>
-            <div className="flex h-1/4">
-                <Button onClick={handleInspect} className="text-white bg-teal-800 rounded w-2/5 ml-8" text="Inspeccionar" />
+            <div className="flex justify-end mt-2">
+                <Button onClick={handleInspect} className="bg-teal-800 text-white px-3 py-2 rounded" text="Inspeccionar" />
+            </div>            
             </div>
         </div>
     );

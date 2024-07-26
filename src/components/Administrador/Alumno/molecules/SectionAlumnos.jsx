@@ -23,6 +23,8 @@ function SectionAlumnos() {
 
     if (grado && grupo) {
       fetchAlumnos();
+      console.log(alumnos.length)
+      localStorage.setItem('members',alumnos.length)
     }
 
   }, [token]);
