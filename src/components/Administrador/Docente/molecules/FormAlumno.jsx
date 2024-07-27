@@ -30,7 +30,6 @@ function FormAlumno({ actualizarAlumnos }) {
         const { Matricula, Nombre, ApellidoP, ApellidoM, Correo, Grupo, Grado } = dataAlumno;
         const newErrors = {};
 
-        // Validaciones
         const nameRegex = /^[A-Z][a-z]+(?: [A-Z][a-z]+)*$/;
         const gradoRegex = /^\d+$/;
         const grupoRegex = /^[A-Z]$/;
@@ -67,7 +66,7 @@ function FormAlumno({ actualizarAlumnos }) {
 
         setErrors(newErrors);
 
-        // Retorna true si no hay errores
+
         return Object.keys(newErrors).length === 0;
     };
 
