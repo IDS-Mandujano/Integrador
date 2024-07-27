@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Swal from 'sweetalert2';
+import { fetchData } from '../../../../utils/fetch';
 import Title from "../atoms/Title";
 import Text from "../atoms/Text";
 import FormAlumno from "../molecules/FormAlumno";
 import AlumnosCard from "../molecules/AlumnosCard";
-import { fetchData } from '../../../../utils/fetch';
+import handleStatusCode from "../../../../utils/messages";
 
 function AddSection() {
     const [alumnos, setAlumnos] = useState([]);
@@ -14,24 +14,13 @@ function AddSection() {
         try {
             const response = await fetchData(`${import.meta.env.VITE_LOCAL_API}/alumnos`, 'GET', token);
             console.log('API Response:', response);
-            
-            // Asumiendo que response.data contiene el array de alumnos
             if (response.status === 200) {
-                setAlumnos(response.data); // Ajusta esto según la estructura de la respuesta
+                setAlumnos(response.data);
             } else {
-                Swal.fire({
-                    title: "Error",
-                    text: "Hubo un problema al obtener los datos.",
-                    icon: "error"
-                });
+                handleStatusCode(response.status)
             }
         } catch (error) {
-            console.error('Fetch error:', error);
-            Swal.fire({
-                title: "Error de conexión",
-                text: "No se puede conectar a internet. Por favor, verifica tu conexión e intenta nuevamente.",
-                icon: "error"
-            });
+            handleStatusCode(500)
         }
     };
 
