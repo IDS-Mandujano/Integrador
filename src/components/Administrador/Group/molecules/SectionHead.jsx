@@ -7,7 +7,7 @@ function SectionHead() {
             <div className="max-w-7xl mx-auto">
                 <div className="text-center">
                     <Title className="text-4xl leading-tight font-extrabold text-gray-900 sm:text-5xl lg:text-6xl" text="Grupos Disponibles"/>
-                    <Text className="mt-4 text-lg text-gray-700" text="Explora los grupos con un solo clic"/>
+                    <Text className="mt-4 text-lg text-gray-700" text="Explora los grupos con un solo click"/>
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ function GroupContainer() {
             <SectionHead />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
                 {grupos.map((item, index) => (
-                <GrupoCard key={index} text={item.Asignatura} grado={item.Grado} grupo={item.Grupo}/>
+                <GrupoCard key={index} text={item.Asignatura} grado={item.Grado} grupo={item.Grupo} IdGrupo={item.IdGrupo}/>
                 ))}
             </div>
         </div>

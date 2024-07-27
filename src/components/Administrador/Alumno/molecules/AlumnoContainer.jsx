@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { fetchData } from "../../../../utils/fetch";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
-import { fetchData } from "../../../../utils/fetch";
 import handleStatusCode from "../../../../utils/messages";
 import EditModal from "../../../Modals/organisms/EditModal";
 import DeleteModal from "../../../Modals/organisms/DeleteModal";
@@ -45,13 +45,12 @@ function AlumnoContainer({ matricula, imageUrl, name, onAlumnoEliminado }) {
   const handleSave = async (data) => {
     const { Matricula, CURP, Contrasena, ...editableData } = data;
     try {
-      const response = await fetchData(`${url}/`, 'PUT', token, { ...editableData, Matricula, CURP, Contrasena });
+      const response = await fetchData(`${url}/`,'PUT',token,{ ...editableData, Matricula, CURP, Contrasena });
       console.log('Response PUT:', response.status);
       handleStatusCode(response.status);
       if (response.status === 200) {
-        setAlumnoData(prevData => ({ ...prevData,...editableData}));
-        setUpdateOpen(false)
-        
+        setAlumnoData(prevData => ({ ...prevData, ...editableData }));
+        setUpdateOpen(false);
       }
     } catch (error) {
       console.error('Error updating student:', error);
@@ -69,18 +68,14 @@ function AlumnoContainer({ matricula, imageUrl, name, onAlumnoEliminado }) {
       </div>
       <div className="flex mt-4 gap-2">
         <Button text="Editar" onClick={() => setUpdateOpen(true)}
-          className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors"
-        />
+          className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors"/>
         <Button text="Eliminar" onClick={() => setOpen(true)}
-          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
-        />
+        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"/>
       </div>
-      <EditModal show={isUpdateOpen} handleClose={() => setUpdateOpen(false)} handleSave={handleSave} data={alumnoData}
-      />
-      <DeleteModal show={isDeleteOpen} handleClose={() => setOpen(false)} handleDelete={handleDelete} item={name}
-      />
+      <EditModal show={isUpdateOpen} handleClose={() => setUpdateOpen(false)} handleSave={handleSave} data={alumnoData}/>
+      <DeleteModal show={isDeleteOpen} handleClose={() => setOpen(false)} handleDelete={handleDelete} item={name}/>
     </div>
-  );
+  )
 }
 
 export default AlumnoContainer;
