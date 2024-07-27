@@ -17,11 +17,20 @@ function AddGroup({ show, handleClose, handleSave }) {
   const inputStyle = "border border-teal-500 w-full px-3 py-2 my-2 rounded";
   const buttonStyle = "px-4 py-2 rounded text-white font-semibold";
 
-  const handleAddGroup = (e) => {
+  const handleAgregarGrupo = async (e) => {
     e.preventDefault()
-    const response = fetchData(`${import.meta.env.VITE_LOCAL_API}/grupos`,'POST',token,formData)
-      console.log("Status respuesta add: ",)
-      handleStatusCode(response.status)
+
+    const url = `${import.meta.env.VITE_LOCAL_API}/grupos`
+    console.log("Datos enviados: ",formData)
+
+    try{
+      const data = await fetchData(url,'POST',token,formData)
+      console.log("Respuesta del servidor: ",data.status)
+      handleStatusCode(data.status)
+      handleClose(false)
+    }catch(error){
+      handleStatusCode(500)
+    }
   }
 
   return (
@@ -37,7 +46,7 @@ function AddGroup({ show, handleClose, handleSave }) {
           <Input type="text" name="Grupo" className={inputStyle} value={formData.Grupo}
             onChange={handleChange} placeholder="Grupo" required/>
           <div className="flex justify-end space-x-4 mt-4">
-            <Button type="submit" onClick={handleAddGroup} className={`${buttonStyle} bg-teal-600 hover:bg-teal-700`} text="Agregar"/>
+            <Button type="submit" onClick={handleAgregarGrupo} className={`${buttonStyle} bg-teal-600 hover:bg-teal-700`} text="Agregar"/>
             <Button type="button" onClick={handleClose} className={`${buttonStyle} bg-red-500 hover:bg-red-600`} text="Cancelar"/>
           </div>
         </form>
