@@ -12,10 +12,21 @@ function AddSection() {
 
     const actualizarAlumnos = async () => {
         try {
-            const data = await fetchData(`${import.meta.env.VITE_LOCAL_API}/alumnos`, 'GET', token);
-            console.log(data.response)
-            setAlumnos(data);
+            const response = await fetchData(`${import.meta.env.VITE_LOCAL_API}/alumnos`, 'GET', token);
+            console.log('API Response:', response);
+            
+            // Asumiendo que response.data contiene el array de alumnos
+            if (response.status === 200) {
+                setAlumnos(response.data); // Ajusta esto según la estructura de la respuesta
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "Hubo un problema al obtener los datos.",
+                    icon: "error"
+                });
+            }
         } catch (error) {
+            console.error('Fetch error:', error);
             Swal.fire({
                 title: "Error de conexión",
                 text: "No se puede conectar a internet. Por favor, verifica tu conexión e intenta nuevamente.",
@@ -36,9 +47,13 @@ function AddSection() {
             </div>
             <FormAlumno actualizarAlumnos={actualizarAlumnos} />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
-                {alumnos.length > 0 && alumnos.map((item, index) => (
-                    <AlumnosCard key={index} matricula={item.Matricula} grado={item.Grado} grupo={item.Grupo} />
-                ))}
+                {alumnos.length > 0 ? (
+                    alumnos.map((item, index) => (
+                        <AlumnosCard key={index} matricula={item.Matricula} grado={item.Grado} grupo={item.Grupo} />
+                    ))
+                ) : (
+                    <Text text="No hay alumnos disponibles." />
+                )}
             </div>
         </div>
     );

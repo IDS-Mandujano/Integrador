@@ -1,11 +1,9 @@
-import { data } from "autoprefixer";
-
 export const fetchData = async (url, method, token, body = null) => {
   const options = {
     method,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `${token}`,
+      'Authorization': token,  // Usar el token directamente sin "Bearer"
     },
   };
 
@@ -15,19 +13,27 @@ export const fetchData = async (url, method, token, body = null) => {
 
   try {
     const response = await fetch(url, options);
-    console.log('Response Status:', response.status);
+    const status = response.status;  // Guarda el código de estado
+    console.log('Response Status:', status);
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      // Lanza un error solo si la respuesta no es `ok`
+      throw new Error(`HTTP error! Status: ${status}`);
     }
+
     const contentType = response.headers.get('content-type');
-    if (contentType && contentType.indexOf('application/json') !== -1) {
-      const data = await response.json();
-      return data;
+    let data;
+
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json();
     } else {
-      return {status: response.status,data};
+      // Maneja el caso donde la respuesta no es JSON
+      data = await response.text(); // Lee el cuerpo como texto
     }
+
+    return { status, data }; // Devuelve el código de estado y los datos
   } catch (error) {
     console.error('Fetch error:', error);
-    throw error;
+    return { status: 500, data: error.message }; // Devuelve un estado de error genérico y el mensaje de error
   }
 };

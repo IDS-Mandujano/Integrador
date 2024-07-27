@@ -4,6 +4,7 @@ import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 import fields from "../../../../data/formData";
 import { fetchData } from '../../../../utils/fetch';
+import handleStatusCode from "../../../../utils/messages";
 
 function FormAlumno({ actualizarAlumnos }) {
     const token = localStorage.getItem('authToken');
@@ -29,7 +30,8 @@ function FormAlumno({ actualizarAlumnos }) {
 
         try {
             const data = await fetchData(url, 'POST', token, dataAlumno);
-            console.log("Respuesta del servidor:", data);
+            console.log("Respuesta del servidor:", data.status);
+            handleStatusCode(data.status)
             actualizarAlumnos();
         } catch (error) {
             console.error('Error durante la solicitud:', error);
