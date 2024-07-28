@@ -19,6 +19,7 @@ function GrupoCard(props) {
     e.preventDefault();
     sessionStorage.setItem("Grado", props.grado);
     sessionStorage.setItem("Grupo", props.grupo);
+    sessionStorage.setItem("IdGrupo", props.IdGrupo);
     navigate("/Detalles");
   };
 
