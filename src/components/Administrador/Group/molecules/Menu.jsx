@@ -13,7 +13,7 @@ function OptionsMenu(props) {
   const token = localStorage.getItem('authToken');
 
   const onDelete = async () => {
-    const response = await fetchData(url, 'DELETE', token, { IdGrupo: props.IdGrupo });
+    const response = await fetchData(url,'DELETE', token,{ IdGrupo: props.IdGrupo });
     handleStatusCode(response.status);
     setShowDeleteModal(false);
     if (props.onDeleteGroup) props.onDeleteGroup();

@@ -1,152 +1,82 @@
-import { useEffect,useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchData } from "../../../utils/fetch";
+import handleStatusCode from "../../../utils/messages";
+import formData from "../../../data/formData";
+import ModalHeader from "../molecules/ModalHeader";
+import ModalFooter from "../molecules/ModalFooter";
+import Input from "../atoms/Input";
 
-function EditModal({ show, handleClose, handleSave, data }) {
-  const [formData, setFormData] = useState({});
+
+function EditModal(props) {
+  const initialFormValues = formData.reduce((acc, item) => {
+    acc[item.key] = "";
+    return acc;
+  }, {});
+
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const url = `${import.meta.env.VITE_LOCAL_API}/alumnos/`;
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
-    if (data) {
-      setFormData(data);
+    const getAlumno = async () => {
+      try {
+        const response = await fetchData(`${url}porId`, 'POST', token, { Matricula: props.id });
+        setFormValues(prevValues => ({
+          ...prevValues,
+          ...response.data
+        }));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    if (props.isUpdateOpen) {
+      getAlumno();
     }
-  }, [data]);
+  }, [props.isUpdateOpen, props.id, url, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
+    setFormValues(prevValues => ({
+      ...prevValues,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos para editar: ",formData)
-    handleSave(formData);
+    try {
+      const response = await fetchData(url,'PUT', token, formValues);
+      if (response.status === 200) {
+        handleStatusCode(response.status);
+        props.handleClose();
+      } else {
+        handleStatusCode(response.status);
+      }
+    } catch (error) {
+      console.log('Error en handleSubmit:', error);
+      handleStatusCode(500);
+    }
   };
 
-  if (!show) return null;
+  if (!props.isUpdateOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="fixed inset-0 bg-gray-600 opacity-50" onClick={handleClose}></div>
-      <div className="bg-white p-6 rounded-lg shadow-lg z-10 max-w-md mx-auto overflow-y-auto h-[80vh]">
-        <h2 className="text-lg font-semibold mb-4">Editar Alumno</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Nombre</label>
-            <input
-              type="text"
-              name="Nombre"
-              value={formData.Nombre || ''}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded"
-              required
+    <div onClick={() => props.handleClose()} className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md h-3/4 overflow-y-auto">
+        <ModalHeader image="Icons/person.png" className="bg-teal-600"/>
+        <form className="flex flex-col space-y-4">
+          {formData.map((item, key) => (
+            <Input className="border border-teal-600 hover:border-2 hover:border-teal-700 rounded-sm p-2"
+              key={key} type={item.type} placeholder={item.placeholder} name={item.key} value={formValues[item.key] || ""}
+              onChange={handleChange} disabled={item.disabled}
             />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Apellido Paterno</label>
-            <input
-              type="text"
-              name="ApellidoP"
-              value={formData.ApellidoP || ''}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Apellido Materno</label>
-            <input
-              type="text"
-              name="ApellidoM"
-              value={formData.ApellidoM || ''}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Edad</label>
-            <input
-              type="number"
-              name="Edad"
-              value={formData.Edad || ''}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Calificación</label>
-            <input
-              type="number"
-              name="Calificacion"
-              value={formData.Calificacion || ''}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Matrícula</label>
-            <input
-              type="text"
-              name="Matricula"
-              value={formData.Matricula || ''}
-              disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">CURP</label>
-            <input
-              type="text"
-              name="CURP"
-              value={formData.CURP || ''}
-              disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Correo</label>
-            <input
-              type="email"
-              name="Correo"
-              value={formData.Correo || ''}
-              disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Grupo</label>
-            <input
-              type="text"
-              name="Grupo"
-              value={formData.Grupo || ''}
-              disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded bg-gray-100"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Grado</label>
-            <input
-              type="text"
-              name="Grado"
-              value={formData.Grado || ''}
-              disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded bg-gray-100"
-            />
-          </div>
+          ))}
           <div className="mt-4 flex justify-end space-x-4">
-            <button
-              type="submit"
-              className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600"
-            >
-              Guardar
-            </button>
-            <button
-              type="button"
-              onClick={handleClose}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            >
-              Cancelar
-            </button>
+            <ModalFooter isTemario={false} action1="Editar" action2="Cancelar"
+              handleClose={props.handleClose} fetch={handleSubmit}
+              action1S="bg-teal-500 text-white" action2S="bg-gray-500 text-white"
+            />
           </div>
         </form>
       </div>
