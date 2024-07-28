@@ -3,7 +3,7 @@ export const fetchData = async (url, method, token, body = null) => {
     method,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': token,  // Usar el token directamente sin "Bearer"
+      'Authorization': token,
     },
   };
 
@@ -13,11 +13,10 @@ export const fetchData = async (url, method, token, body = null) => {
 
   try {
     const response = await fetch(url, options);
-    const status = response.status;  // Guarda el código de estado
+    const status = response.status;
     console.log('Response Status:', status);
 
     if (!response.ok) {
-      // Lanza un error solo si la respuesta no es `ok`
       throw new Error(`HTTP error! Status: ${status}`);
     }
 
@@ -27,13 +26,12 @@ export const fetchData = async (url, method, token, body = null) => {
     if (contentType && contentType.includes('application/json')) {
       data = await response.json();
     } else {
-      // Maneja el caso donde la respuesta no es JSON
-      data = await response.text(); // Lee el cuerpo como texto
+      data = await response.text();
     }
 
-    return { status, data }; // Devuelve el código de estado y los datos
+    return { status, data };
   } catch (error) {
     console.error('Fetch error:', error);
-    return { status: 500, data: error.message }; // Devuelve un estado de error genérico y el mensaje de error
+    return { status: 500, data: error.message };
   }
 };

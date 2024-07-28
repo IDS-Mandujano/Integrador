@@ -20,6 +20,7 @@ function SectionTareas() {
     try {
       const data = await fetchData(url, 'POST', token, { IdGrupo: id });
       if (data.data && Array.isArray(data.data)) {
+        console.log(data.data);
         setTareas(data.data);
       } else {
         console.error("Unexpected response format:", data);
@@ -43,11 +44,12 @@ function SectionTareas() {
           tareas.map((item, index) => (
             <TareasContainer
               key={index}
+              id={item.IdActividad}
+              IdGrupo = {id}
               parcial={item.Parcial}
               title={item.Tema}
               subtitle={item.Subtema}
               description={item.Descripcion}
-              id={item.IdActividad}
               fetchTareas={fetchTareas}
             />
           ))
@@ -66,7 +68,7 @@ function SectionTareas() {
           className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-400 transition duration-300 ml-2" 
         />
       </div>
-      <AddTarea show={open} handleClose={() => setOpen(false)} id={id} />
+      <AddTarea show={open} handleClose={() => setOpen(false)} id={id}/>
     </div>
   );
 }
