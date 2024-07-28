@@ -9,7 +9,7 @@ function HeaderAlum() {
                     <Image className="flex w-1/12 items-center" image="imagen-removebg-preview.png" />
                 </div>
                 <div className="flex w-2/5 items-center">
-                    <Navbar/>
+                    <Navbar />
                 </div>
             </div>
         </header>
