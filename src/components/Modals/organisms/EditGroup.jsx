@@ -15,7 +15,7 @@ function EditGroup({ show, handleClose, handleSave, id }) {
   useEffect(() => {
     const fetchGroupData = async () => {
       try {
-        const data = await fetchData(`${url}/porId`, 'POST', token, { IdGrupo: id });
+        const data = await fetchData(`${url}/porId`,'POST', token, { IdGrupo: id });
         setFormData(data.data)
       } catch (error) {
         handleStatusCode(500);
@@ -35,19 +35,14 @@ function EditGroup({ show, handleClose, handleSave, id }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetchData(url, 'PUT', token, formData);
-      console.log(response);
-      console.log("STATUS CODE EDIT: ", response.status);
+      const response = await fetchData(url,'PUT', token, formData);
       if (response.status === 200) {
+        console.log("Respuesta del servidor: ",response.status);
         handleStatusCode(response.status);
-        handleSave(response.data);
         handleClose();
-      } else {
-        handleStatusCode(response.status);
       }
     } catch (error) {
-      console.log('Error en handleSubmit:', error);
-      handleStatusCode(error.response ? error.response.status : 500);
+      handleStatusCode(error.status);
     }
   };
 

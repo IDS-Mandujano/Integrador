@@ -28,7 +28,7 @@ function GrupoCard(props) {
         <Image image="Icons/menu.png" className="w-6 h-6 bg-teal-800 rounded-sm" />
       </button>
       <OptionsMenu show={showOptions} onClose={()=> setShowOptions(!showOptions)} IdGrupo={props.IdGrupo} asignatura={props.text}
-        onEdit={()=> setShowEditModal(true)} onDeleteGroup={props.onDeleteGroup}/>
+        onEdit={()=> setShowEditModal(true)}/>
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
