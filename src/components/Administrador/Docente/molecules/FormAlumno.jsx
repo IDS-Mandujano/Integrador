@@ -72,23 +72,23 @@ function FormAlumno({ actualizarAlumnos }) {
 
     const handleAgregarAlumno = async (e) => {
         e.preventDefault();
-
+    
         if (!validateData()) {
             return;
         }
-
-        const url = `${import.meta.env.VITE_LOCAL_API}/alumnos`;
+    
+        const url = `${import.meta.env.VITE_LOCAL_API}/alumnos/`;
         console.log("Datos enviados:", dataAlumno);
-
+    
         try {
-            const data = await fetchData(url, 'POST', token, dataAlumno);
-            console.log("Respuesta del servidor:", data.status);
+            const data = await fetchData(url,'POST', token, dataAlumno);
+            console.log("Respuesta del servidor:", data.status, data.data);
             handleStatusCode(data.status)
             actualizarAlumnos();
         } catch (error) {
             console.error('Error durante la solicitud:', error);
         }
-    };
+    };    
 
     return (
         <form className="flex flex-wrap items-center space-x-4 p-4 bg-white rounded-lg shadow-md">

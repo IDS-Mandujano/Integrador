@@ -18,7 +18,9 @@ function Navbar() {
                     <Image className="w-10 h-10" image="Icons/menu.png" />
                 </button>
             </nav>
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} userName={user.usuario} userImage="vite.svg"/>
+            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} 
+            name={user.nombre} apeP={user.apellido_p} apeM={user.apellido_m}
+            userImage="vite.svg"/>
         </>
     );
 }

@@ -1,5 +1,3 @@
-import handleStatusCode from "./messages";
-
 export const fetchData = async (url, method, token, body = null) => {
   const options = {
     method,
@@ -32,6 +30,7 @@ export const fetchData = async (url, method, token, body = null) => {
       // Maneja el caso donde la respuesta no es JSON
       data = await response.text(); // Lee el cuerpo como texto
     }
+
     return { status, data }; // Devuelve el código de estado y los datos
   } catch (error) {
     console.error('Fetch error:', error);

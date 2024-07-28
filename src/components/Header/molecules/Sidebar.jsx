@@ -29,7 +29,7 @@ function Sidebar(props) {
 
                     <div className="flex flex-col items-center mb-6 border-b">
                         <Image className="w-24 h-24 rounded-full mr-3" image={props.userImage} />
-                        <Text text={props.userName} className="font-semibold text-2xl mt-4 mb-4" />
+                        <Text text={`Docente: ${props.name} ${props.apeP} ${props.apeM}`} className="font-semibold text-xlDocente:  mt-4 mb-4"/>
                     </div>
 
                     {links.map((link, index) => (

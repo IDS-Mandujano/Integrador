@@ -14,6 +14,7 @@ function StudentContainer() {
     const fetchStudents = async () => {
       try {
         const data = await fetchData(url, "POST", token, { Grado: user.grado, Grupo: user.grupo });
+        console.log(user.grado, user.grupo);
         setStudents(data);
       } catch (error) {
         console.error("Error fetching students:", error);
