@@ -1,12 +1,11 @@
 import { useState } from "react";
-import handleStatusCode from "../../../utils/messages";
 import { fetchData } from "../../../utils/fetch";
-import Button from "../atoms/Button";
+import handleStatusCode from "../../../utils/messages";
 import Input from "../atoms/Input";
 import ModalFooter from "../molecules/ModalFooter";
 import ModalHeader from "../molecules/ModalHeader";
 
-function AddGroup({ show, handleClose, handleSave }) {
+function AddGroup({show, handleClose, handleSave}) {
 
   const token = localStorage.getItem('authToken')
   const [formData, setFormData] = useState({Asignatura: "",Grado: "", Grupo: ""});
@@ -15,8 +14,6 @@ function AddGroup({ show, handleClose, handleSave }) {
   if (!show) return null;
 
   const inputStyle = "border border-teal-500 w-full px-3 py-2 my-2 rounded";
-  const buttonStyle = "px-4 py-2 rounded text-white font-semibold";
-
   const handleAgregarGrupo = async (e) => {
     e.preventDefault()
 
@@ -45,12 +42,12 @@ function AddGroup({ show, handleClose, handleSave }) {
             onChange={handleChange} placeholder="Grado" required/>
           <Input type="text" name="Grupo" className={inputStyle} value={formData.Grupo}
             onChange={handleChange} placeholder="Grupo" required/>
-          <div className="flex justify-end space-x-4 mt-4">
-            <Button type="submit" onClick={handleAgregarGrupo} className={`${buttonStyle} bg-teal-600 hover:bg-teal-700`} text="Agregar"/>
-            <Button type="button" onClick={handleClose} className={`${buttonStyle} bg-red-500 hover:bg-red-600`} text="Cancelar"/>
-          </div>
         </form>
-        <ModalFooter />
+        <div className="mt-4 flex justify-end space-x-4">
+          <ModalFooter isTemario={false} action1="Agregar" action2="Cancelar" 
+            handleClose={handleClose} fetch={handleAgregarGrupo}
+            action1S="bg-teal-500 text-white" action2S="bg-red-500 text-white"/>
+        </div>
       </div>
     </div>
   );

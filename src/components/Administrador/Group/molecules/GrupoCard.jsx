@@ -1,26 +1,25 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Title from "../atoms/Title";
 import Text from "../atoms/Text";
 import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import OptionsMenu from "./Menu";
 import EditGroupModal from "../../../Modals/organisms/EditGroup";
-import { useNavigate } from "react-router-dom";
+
 
 function GrupoCard(props) {
   const navigate = useNavigate();
   const [showOptions, setShowOptions] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  console.log('id grupo: ',props.IdGrupo)
+
   const handleInspect = (e) => {
     e.preventDefault();
     sessionStorage.setItem("Grado", props.grado);
     sessionStorage.setItem("Grupo", props.grupo);
     navigate("/Detalles");
-  };
-
-  const handleSaveGroup = (data) => {
-    console.log("Datos guardados:", data);
   };
 
   return (
@@ -45,7 +44,7 @@ function GrupoCard(props) {
           <Button onClick={handleInspect} className="bg-teal-800 text-white px-4 py-2 rounded" text="Inspeccionar"/>
         </div>
       </div>
-      <EditGroupModal show={showEditModal} handleClose={()=> setShowEditModal(false)} handleSave={handleSaveGroup}mdata={""}/>
+      <EditGroupModal show={showEditModal} handleClose={()=> setShowEditModal(false)} id={props.IdGrupo}/>
     </div>
   );
 }

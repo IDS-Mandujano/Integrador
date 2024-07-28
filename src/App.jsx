@@ -12,7 +12,9 @@ import Tareas from "./pages/Tareas"
 import UserContext from './context/userContext';
 
 function App() {
-  const [user, setUser] = useState({ usuario: '', grado: '', grupo: '', role: '', token: '' });
+  const [user, setUser] = useState(
+    { usuario: '', grado: '', grupo: '',role: '',
+    nombre: '',apellido_p: '',apellido_m : '', token: '' });
 
   return (
     <BrowserRouter>

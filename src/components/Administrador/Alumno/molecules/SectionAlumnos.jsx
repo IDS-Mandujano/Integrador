@@ -2,6 +2,7 @@ import { useState, useEffect} from "react";
 import Title from "../atoms/Title";
 import AlumnoContainer from "../molecules/AlumnoContainer";
 import { fetchData } from "../../../../utils/fetch";
+import handleStatusCode from "../../../../utils/messages";
 
 function SectionAlumnos() {
   const [alumnos, setAlumnos] = useState([]);
@@ -15,9 +16,10 @@ function SectionAlumnos() {
     const fetchAlumnos = async () => {
       try {
         const data = await fetchData(url,'POST',token, {Grado: grado, Grupo: grupo});
-        setAlumnos(data);
+        setAlumnos(data.data);
       } catch (error) {
         console.log('Error al obtener alumnos:', error);
+        handleStatusCode(500)
       }
     };
 

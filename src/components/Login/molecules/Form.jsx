@@ -39,7 +39,7 @@ function Form() {
         .then(data => {
             localStorage.setItem('Usuario',data.username)
             console.log(data)
-            setUser({ usuario: data.username, grado: data.grado, grupo: data.grupo, role: data.role });
+            setUser({ usuario: data.username, grado: data.grado, grupo: data.grupo, role: data.role, });
             Swal.fire({
                 title: "Inicio de sesión exitoso",
                 text: "Has iniciado sesión correctamente.",
