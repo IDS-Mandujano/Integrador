@@ -2,10 +2,8 @@ import ModalHeader from '../molecules/ModalHeader';
 import ModalFooter from '../molecules/ModalFooter';
 import handleStatusCode from '../../../utils/messages';
 import { fetchData } from '../../../utils/fetch';
-import { useState } from 'react';
 
-function DeleteActv({ show,handleClose,item,id}) {
-    const [open,setOpen] = useState(false)
+function DeleteActv({ show, handleClose, item, id }) {
   if (!show) return null;
 
   const url = `${import.meta.env.VITE_LOCAL_API}/actividades/`
@@ -16,12 +14,12 @@ function DeleteActv({ show,handleClose,item,id}) {
       const response = await fetchData(url, 'DELETE', token, { IdActividad: id });
       handleStatusCode(response.status);
       if (response.status === 204) {
-        setOpen(false);
+        handleClose();
       }
     } catch (error) {
-      console.error('Error deleting student:', error);
+      console.error('Error deleting activity:', error);
       handleStatusCode(500);
-      setOpen(false);
+      handleClose();
     }
   }; 
 
@@ -33,13 +31,18 @@ function DeleteActv({ show,handleClose,item,id}) {
           text={`¿Estás seguro de que deseas eliminar el elemento ${item}?`}
         />
         <div className="mt-4 flex justify-end space-x-4">
-        <ModalFooter action1="Eliminar" action2="Cancelar" 
-          handleClose={handleClose} fetch={handleDelete}
-          action1S="bg-red-500 text-white" action2S="bg-gray-500 text-white"/>
+          <ModalFooter 
+            action1="Eliminar" 
+            action2="Cancelar" 
+            handleClose={handleClose} 
+            fetch={handleDelete}
+            action1S="bg-red-500 text-white" 
+            action2S="bg-gray-500 text-white"
+          />
         </div>
       </div>
     </div>
   );
 }
 
-export default DeleteActv
+export default DeleteActv;

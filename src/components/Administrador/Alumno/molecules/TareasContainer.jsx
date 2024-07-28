@@ -5,7 +5,7 @@ import File from '../atoms/File';
 import DeleteActv from "../../../Modals/organisms/DeleteActv"
 
 function TareasContainer(props) {
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center mb-4">
@@ -19,12 +19,12 @@ function TareasContainer(props) {
       <div className="flex mt-4 gap-2">
         <Button text="Editar" onClick={props.onEditar} 
         className="bg-teal-500 text-white px-3 py-1 rounded-md hover:bg-teal-600 transition duration-300 text-sm" />
-        <Button text="Eliminar" onClick={()=> setOpen(true)}
+        <Button text="Eliminar" onClick={() => setOpen(true)}
         className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-300 text-sm" />
       </div>
-      <div>
-        <DeleteActv show={open} handleClose={()=> setOpen(false)} id={props.id}/>
-      </div>
+      {open && (
+        <DeleteActv show={open} handleClose={() => setOpen(false)} id={props.id}/>
+      )}
     </div>
   );
 }
