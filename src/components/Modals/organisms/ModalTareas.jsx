@@ -1,55 +1,28 @@
-import { useState, useEffect } from "react";
-import Button from "../atoms/Button";
-import FileUpload from "../molecules/FileUpload";
+// ModalTareas.jsx
+import React, { useState } from 'react';
 
-function ModalTareas({ task, onClose }) {
+const ModalTareas = ({ task, onClose, token }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false); 
-  const url = `${import.meta.env.VITE_LOCAL_API}/tarea`;
-  const token = localStorage.getItem('authToken');
-
-  useEffect(() => {
-    const checkTaskStatus = async () => {
-      if (!task || !token) return;
-
-      try {
-        const response = await fetch(`${url}/checkStatus/${task.IdActividad}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          setIsTaskSubmitted(result.submitted);
-        } else {
-          console.error('Error checking task status:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error checking task status:', error);
-      }
-    };
-
-    checkTaskStatus();
-  }, [task, token, url]);
-
-  function handleFileChange(event) {
+  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false);
+  
+  const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
-  }
+  };
 
-  async function handleSubmit() {
-    if (!token) {
-      console.error("No auth token found");
+  const handleSubmit = async () => {
+    if (!selectedFile) {
+      console.error('No file selected');
       return;
     }
 
     const formData = new FormData();
     formData.append('file', selectedFile);
     formData.append('idActividad', task.IdActividad);
+    formData.append('matricula', 'tu_matricula_aqui'); // Asegúrate de que `matricula` se obtiene y envía correctamente
+    formData.append('idGrupo', 'tu_idGrupo_aqui'); // Asegúrate de que `idGrupo` se obtiene y envía correctamente
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch('http://localhost:3000/api/tarea', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -68,34 +41,15 @@ function ModalTareas({ task, onClose }) {
     } catch (error) {
       console.error('Error creando la tarea:', error);
     }
-  }
+  };
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 relative w-96">
-        <FileUpload onFileChange={handleFileChange} />
-        <div className="flex justify-between">
-          <Button
-            text="Eliminar tarea"
-            onClick={() => console.log("Eliminar tarea")}
-            className="bg-red-500 text-white hover:bg-red-600"
-          />
-          <Button
-            text="Subir tarea"
-            onClick={handleSubmit}
-            className="bg-teal-500 text-white hover:bg-teal-600"
-            disabled={isTaskSubmitted}
-          />
-        </div>
-        <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
-        >
-          &times;
-        </button>
-      </div>
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleSubmit}>Submit</button>
+      {isTaskSubmitted && <p>Tarea enviada con éxito.</p>}
     </div>
   );
-}
+};
 
 export default ModalTareas;

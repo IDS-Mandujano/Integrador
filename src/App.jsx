@@ -10,6 +10,7 @@ import Tareas from "./pages/Tareas"
 import RouteProtectedAdmin from './pages/RouteProtectedAdmin'
 import RouteProtectedAlumno from './pages/RouteProtectedAlumno';
 import UserContext from './context/userContext';
+import Temario from './pages/Temario';
 
 function App() {
   const [user, setUser] = useState(
@@ -29,6 +30,7 @@ function App() {
           <Route element={<RouteProtectedAlumno/>}>
             <Route path='/Alumno' element={<VistaInscritos/>}/>
             <Route path='/Tareas' element={<Tareas/>}/>
+            <Route path='/Temario' element={<Temario />} /> 
           </Route>
         </Routes>
       </UserContext.Provider>
