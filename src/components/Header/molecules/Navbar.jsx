@@ -20,7 +20,7 @@ function Navbar() {
             </nav>
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} 
             name={user.nombre} apeP={user.apellido_p} apeM={user.apellido_m}
-            userImage="vite.svg"/>
+            userImage="doc.jpg"/>
         </>
     );
 }

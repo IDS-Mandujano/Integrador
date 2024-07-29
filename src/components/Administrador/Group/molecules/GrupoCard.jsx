@@ -37,7 +37,7 @@ function GrupoCard(props) {
         </div>
         <div className="flex items-center h-1/4">
           <Image image="Icons/group.png" className="size-8 mr-4 bg-teal-500 rounded-sm" />
-          <Text text={`Miembros: 32`} />
+          <Text text={`Miembros: --`} />
         </div>
         <div className="flex justify-end">
           <Button onClick={handleInspect} className="bg-teal-800 text-white px-4 py-2 rounded" text="Inspeccionar"/>

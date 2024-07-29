@@ -4,7 +4,7 @@ import FileUpload from "../molecules/FileUpload";
 
 function ModalTareas({ task, onClose }) {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false); // Estado para verificar si la tarea ha sido subida
+  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false); 
   const url = `${import.meta.env.VITE_LOCAL_API}/tarea`;
   const token = localStorage.getItem('authToken');
 
