@@ -9,15 +9,18 @@ function TaskContainer() {
   const [selectedTask, setSelectedTask] = useState(null);
   const token = localStorage.getItem("authToken");
   const url = `${import.meta.env.VITE_LOCAL_API}/actividades/obtenerActividadesPorGrupo`;
-
-  const IdGrupo = sessionStorage.getItem("IdGrupo");
+  
+  const IdGrupo = sessionStorage.getItem("idGrupoAlumno");
+  console.log('IdGrupo:', IdGrupo);
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const body = { IdGrupo };
-        console.log(body);
+        console.log('Request Body:', body);
         const fetchedTasks = await fetchData(url, "POST", token, body);
+
+        console.log('Fetched Tasks:', fetchedTasks);
 
         if (fetchedTasks.status === 200) {
           setTasks(fetchedTasks.data);
