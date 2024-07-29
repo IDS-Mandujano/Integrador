@@ -23,6 +23,7 @@ function AddTarea({ show, handleClose, id }) {
 
   const handleAgregarTarea = async (e) => {
     e.preventDefault();
+    
     try {
       const data = await fetchData(url, 'POST', token, { ...formData, IdGrupo: id });
       console.log("Respuesta del servidor: ", data.status);
