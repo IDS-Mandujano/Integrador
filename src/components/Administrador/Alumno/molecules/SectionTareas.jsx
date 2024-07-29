@@ -4,10 +4,12 @@ import Title from "../atoms/Title";
 import TareasContainer from "../molecules/TareasContainer";
 import Button from "../atoms/Button";
 import AddTarea from "../../../Modals/organisms/AddTarea";
+import AddTemario from "../../../Modals/organisms/AddTemario";
 import handleStatusCode from "../../../../utils/messages";
 
 function SectionTareas() {
-  const [open, setOpen] = useState(false);
+  const [openAddTarea, setOpenAddTarea] = useState(false);
+  const [openAddTemario, setOpenAddTemario] = useState(false);
   const [tareas, setTareas] = useState([]);
 
   const id = sessionStorage.getItem('IdGrupo');
@@ -37,22 +39,38 @@ function SectionTareas() {
   return (
     <div className="relative bg-gray-100 rounded-lg shadow-lg p-6 md:p-8 mb-8 max-h-96 overflow-y-auto">
       <Title className="text-3xl font-bold text-gray-800 mb-6" title="Actividades" />
-      <Button 
-        text="Agregar Tarea" 
-        className="absolute top-6 right-6 bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-500 transition duration-300" 
-        onClick={() => setOpen(true)} 
-      />
-      <div className="flex flex-wrap gap-6">
+      <button 
+        onClick={() => setOpenAddTarea(true)} 
+        className="absolute top-6 right-44 bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-500 transition duration-300"
+      >
+        Agregar Tarea
+      </button>
+      <button 
+        onClick={() => setOpenAddTemario(true)} 
+        className="absolute top-6 right-4 bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-300"
+      >
+        Agregar Temario
+      </button>
+      <div className="flex flex-wrap gap-6 mt-12">
         {Array.isArray(tareas) && tareas.length > 0 ? (
           tareas.map((item, index) => (
-            <TareasContainer key={index} id={item.IdActividad} IdGrupo={id} parcial={item.Parcial}
-              title={item.Tema} subtitle={item.Subtema} description={item.Descripcion} fetchTareas={fetchTareas}/>
+            <TareasContainer 
+              key={index} 
+              id={item.IdActividad} 
+              IdGrupo={id} 
+              parcial={item.Parcial}
+              title={item.Tema} 
+              subtitle={item.Subtema} 
+              description={item.Descripcion} 
+              fetchTareas={fetchTareas}
+            />
           ))
         ) : (
           <p className="text-gray-500">No hay actividades disponibles.</p>
         )}
       </div>
-      <AddTarea show={open} handleClose={() => setOpen(false)} id={id} />
+      <AddTarea show={openAddTarea} handleClose={() => setOpenAddTarea(false)} id={id} />
+      <AddTemario show={openAddTemario} handleClose={() => setOpenAddTemario(false)} />
     </div>
   );
 }

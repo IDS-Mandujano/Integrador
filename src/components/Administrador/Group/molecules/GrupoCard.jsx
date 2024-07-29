@@ -7,7 +7,6 @@ import Button from "../atoms/Button";
 import OptionsMenu from "./Menu";
 import EditGroupModal from "../../../Modals/organisms/EditGroup";
 
-
 function GrupoCard(props) {
   const navigate = useNavigate();
   const [showOptions, setShowOptions] = useState(false);
@@ -23,11 +22,11 @@ function GrupoCard(props) {
 
   return (
     <div className="relative bg-white rounded-lg shadow-md overflow-hidden">
-      <button onClick={()=> setShowOptions(!showOptions)} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+      <button onClick={() => setShowOptions(!showOptions)} className="absolute top-4 right-12 text-gray-500 hover:text-gray-700">
         <Image image="Icons/menu.png" className="w-6 h-6 bg-teal-800 rounded-sm" />
       </button>
-      <OptionsMenu show={showOptions} onClose={()=> setShowOptions(!showOptions)} IdGrupo={props.IdGrupo} asignatura={props.text}
-        onEdit={()=> setShowEditModal(true)}/>
+      <OptionsMenu show={showOptions} onClose={() => setShowOptions(!showOptions)} IdGrupo={props.IdGrupo} asignatura={props.text}
+        onEdit={() => setShowEditModal(true)} />
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -40,10 +39,10 @@ function GrupoCard(props) {
           <Text text={`Miembros: --`} />
         </div>
         <div className="flex justify-end">
-          <Button onClick={handleInspect} className="bg-teal-800 text-white px-4 py-2 rounded" text="Inspeccionar"/>
+          <Button onClick={handleInspect} className="bg-teal-800 text-white px-4 py-2 rounded" text="Inspeccionar" />
         </div>
       </div>
-      <EditGroupModal show={showEditModal} handleClose={()=> setShowEditModal(false)} id={props.IdGrupo}/>
+      <EditGroupModal show={showEditModal} handleClose={() => setShowEditModal(false)} id={props.IdGrupo} />
     </div>
   );
 }
