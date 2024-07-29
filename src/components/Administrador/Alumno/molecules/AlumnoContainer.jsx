@@ -22,7 +22,6 @@ function AlumnoContainer(props) {
         setOpen(false);
       }
     } catch (error) {
-      console.error('Error deleting student:', error);
       handleStatusCode(500);
       setOpen(false);
     }
@@ -37,7 +36,7 @@ function AlumnoContainer(props) {
       </div>
       <div className="flex mt-4 gap-2">
         <Button text="Editar" onClick={() => setUpdateOpen(true)}
-          className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors"/>
+        className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors"/>
         <Button text="Eliminar" onClick={() => setOpen(true)}
         className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"/>
       </div>
