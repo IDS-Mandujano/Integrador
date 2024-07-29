@@ -12,12 +12,7 @@ function TareasContainer(props) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openContent, setContent] = useState(false)
 
-  console.log("Id de la actividad: ", props.id);
-  const navigate = useNavigate('')
-
-  const handleCalificar = (e)=>{
-    navigate('/Calificar')
-  }
+  console.log("Id de la actividad: ", props.id)
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center mb-6 w-full">
@@ -37,7 +32,7 @@ function TareasContainer(props) {
         <button onClick={() => setOpen(true)}><Image className="bg-red-500 w-10 h-10" src="Icons/delete.png"/></button>
       </div>
       <EditActividad show={openUpdate} handleClose={() => setOpenUpdate(false)} id={props.id} idGrupo={props.IdGrupo}/>
-      <AddContent show={openContent} handleClose={() => setContent(false)}/>
+      <AddContent show={openContent} handleClose={() => setContent(false)} idActividad={props.id}/>
       <DeleteActv show={openDelete} handleClose={() => setOpen(false)} id={props.id} item="Actividad"/>
     </div>
   );

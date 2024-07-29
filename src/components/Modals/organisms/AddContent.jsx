@@ -6,11 +6,12 @@ import ModalHeader from "../molecules/ModalHeader";
 
 const API_KEY = 'sk-None-jkYSerUlpddwTE9i9CaKT3BlbkFJFH4EJZUZ7AjjDJrEUdFz';
 
-function AddContent({ show, handleClose, handleSave }) {
+function AddContent({ show, handleClose, idActividad }) {
   const [formData, setFormData] = useState({ file: null, content: "" });
   const [contentType, setContentType] = useState("");
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
+  const [pdfUrl, setPdfUrl] = useState('');
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -20,15 +21,7 @@ function AddContent({ show, handleClose, handleSave }) {
   const handleContentTypeChange = (type) => {
     setContentType(type);
     setFormData({ file: null, content: "" });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (typeof handleSave === 'function') {
-      handleSave(formData);
-    } else {
-      console.error('handleSave no es una función');
-    }
+    setPdfUrl('');
   };
 
   const generateContent = async () => {
@@ -60,6 +53,13 @@ function AddContent({ show, handleClose, handleSave }) {
   };
 
   const generatePdf = async () => {
+    const idActividadStr = String(idActividad || '').trim();
+    
+    if (!idActividadStr) {
+      console.error('ID Actividad no válido');
+      return;
+    }
+  
     const doc = new jsPDF();
     const margin = 10;
     const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
@@ -68,56 +68,15 @@ function AddContent({ show, handleClose, handleSave }) {
     doc.text(text, margin, margin);
   
     const pdfBlob = doc.output('blob');
-    const formData = new FormData();
-    formData.append('archivo', pdfBlob, 'contenido.pdf');
-    const idActividad = sessionStorage.getItem('idActividad');
-  
-    console.log('ID Actividad en generatePdf:', idActividad);
-  
-    if (!idActividad || idActividad.trim() === '') {
-      console.error('ID Actividad no válido');
-      return;
-    }
-  
-    formData.append('idActividad', idActividad);
-  
-    try {
-      const uploadResponse = await fetch('/api/contenido', {
-        method: 'POST',
-        body: formData,
-      });
-  
-      if (!uploadResponse.ok) {
-        throw new Error(`Error al subir el archivo: ${uploadResponse.statusText}`);
-      }
-  
-      console.log("Archivo PDF subido con éxito.");
-    } catch (error) {
-      console.error('Error al subir el archivo:', error);
-    }
-  };
-
-  const uploadPdf = async () => {
-    if (!formData.file) {
-      console.error('No hay archivo para subir');
-      return;
-    }
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    setPdfUrl(pdfUrl);
   
     const formDataToSend = new FormData();
-    formDataToSend.append('archivo', formData.file);
-    const idActividad = sessionStorage.getItem('idActividad');
-    
-    console.log('ID Actividad en uploadPdf:', idActividad);
-    
-    if (!idActividad || idActividad.trim() === '') {
-      console.error('ID Actividad no válido');
-      return;
-    }
-  
-    formDataToSend.append('idActividad', idActividad);
+    formDataToSend.append('archivo', pdfBlob, 'contenido.pdf');
+    formDataToSend.append('idActividad', idActividadStr);
   
     try {
-      const uploadResponse = await fetch('/api/contenido', {
+      const uploadResponse = await fetch(`${import.meta.env.VITE_LOCAL_API}/tarea/`, {
         method: 'POST',
         body: formDataToSend,
       });
@@ -129,6 +88,42 @@ function AddContent({ show, handleClose, handleSave }) {
       console.log("Archivo PDF subido con éxito.");
     } catch (error) {
       console.error('Error al subir el archivo:', error);
+    }
+  };
+  
+
+  const uploadPdf = async () => {
+    if (!formData.file) {
+      console.error('No hay archivo para subir');
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('tarea', formData.file);
+    formDataToSend.append('idActividad', idActividad);
+
+    try {
+      const uploadResponse = await fetch(`${import.meta.env.VITE_LOCAL_API}/tarea/`, {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error(`Error al subir el archivo: ${uploadResponse.statusText}`);
+      }
+
+      console.log("Archivo PDF subido con éxito.");
+    } catch (error) {
+      console.error('Error al subir el archivo:', error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (contentType === "file") {
+      uploadPdf();
+    } else if (contentType === "content") {
+      generatePdf();
     }
   };
 
@@ -148,39 +143,51 @@ function AddContent({ show, handleClose, handleSave }) {
         </div>
         <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
           <ContentField contentType={contentType} formData={formData} handleChange={handleChange} />
-        </form>
-        {contentType === "content" && (
-          <div className="mt-4">
-            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Escribe tu mensaje..." className="border border-teal-500 w-full px-3 py-2 my-2 rounded"
-            />
-            <button
-              onClick={generateContent}
-              className="py-2 px-4 bg-teal-500 text-white rounded"
-            >
-              Generar
-            </button>
+          {contentType === "content" && (
             <div className="mt-4">
-              <h2 className="font-semibold text-gray-700">Respuesta:</h2>
-              <p className="border border-teal-500 w-full px-3 py-2 my-2 rounded overflow-auto max-h-32">{response}</p>
+              <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Escribe tu mensaje..." className="border border-teal-500 w-full px-3 py-2 my-2 rounded"
+              />
               <button
-                onClick={generatePdf}
+                onClick={generateContent}
+                className="py-2 px-4 bg-teal-500 text-white rounded"
+              >
+                Generar
+              </button>
+              <div className="mt-4">
+                <h2 className="font-semibold text-gray-700">Respuesta:</h2>
+                <p className="border border-teal-500 w-full px-3 py-2 my-2 rounded overflow-auto max-h-32">{response}</p>
+                <button
+                  type="button"
+                  onClick={generatePdf}
+                  className="py-2 px-4 bg-teal-500 text-white rounded mt-2"
+                >
+                  Generar Contenido PDF
+                </button>
+                {pdfUrl && (
+                  <div className="mt-4">
+                    <a
+                      href={pdfUrl}
+                      download="contenido.pdf"
+                      className="py-2 px-4 bg-teal-500 text-white rounded inline-block"
+                    >
+                      Descargar PDF
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {contentType === "file" && (
+            <div className="mt-4">
+              <button
+                type="submit"
                 className="py-2 px-4 bg-teal-500 text-white rounded mt-2"
               >
-                Generar Contenido PDF
+                Subir PDF
               </button>
             </div>
-          </div>
-        )}
-        {contentType === "file" && (
-          <div className="mt-4">
-            <button
-              onClick={uploadPdf}
-              className="py-2 px-4 bg-teal-500 text-white rounded mt-2"
-            >
-              Subir PDF
-            </button>
-          </div>
-        )}
+          )}
+        </form>
         <div className="mt-4 flex justify-end space-x-4">
           <ModalFooter isTemario={false} action1="Guardar" action2="Cancelar" handleClose={handleClose} fetch={handleSubmit} 
           action1S="bg-teal-500 text-white" action2S="bg-red-500 text-white"/>
