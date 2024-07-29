@@ -9,13 +9,20 @@ function StudentContainer() {
   const { user } = useContext(UserContext);
   const url = `${import.meta.env.VITE_LOCAL_API}/alumnos/porGradoGrupo`;
   const token = localStorage.getItem("authToken");
-
+  
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const data = await fetchData(url, "POST", token, { Grado: user.grado, Grupo: user.grupo });
-        console.log(user.grado, user.grupo);
-        setStudents(data);
+        const response = await fetchData(url, "POST", token, { Grado: user.grado, Grupo: user.grupo });
+        console.log("API Response:", response);
+        
+        if (response.status === 200) {
+          const data = response.data;
+          console.log("Fetched Students:", data);
+          setStudents(data);
+        } else {
+          console.error("Error fetching students:", response.message);
+        }
       } catch (error) {
         console.error("Error fetching students:", error);
       }
@@ -29,7 +36,7 @@ function StudentContainer() {
       <div className="overflow-y-auto flex-1 p-2">
         {students.length > 0 ? (
           students.map((student) => (
-            <StudentItem key={student.matricula} matricula={student.Matricula} name={`${student.Nombre} ${student.ApellidoP} ${student.ApellidoM}`} />
+            <StudentItem key={student.Matricula} matricula={student.Matricula} name={`${student.Nombre} ${student.ApellidoP} ${student.ApellidoM}`} />
           ))
         ) : (
           <p className="text-center">No hay alumnos inscritos.</p>

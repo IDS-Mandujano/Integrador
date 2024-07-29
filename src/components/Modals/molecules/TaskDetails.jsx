@@ -1,19 +1,14 @@
-import Title from "../atoms/Title";
-import Text from "../atoms/Text";
-import Image from "../atoms/Image";
-
-function TaskDetails({ task }) {
+function TaskDetails({ task, onInputChange, taskDetails }) {
   return (
-    <div>
-      <Title title={`Tema: ${task.Tema}`} />
-      <Text className="text-lg mb-2" text="Descripción" />
-      <Text className="mb-4" text={task.Descripcion} />
-      <div className="mb-4">
-        <Text className="text-lg" text={`Material: ${task.filename}`} />
-        <div className="mt-2 flex justify-center">
-          <Image image="Icons/upload_pdf.jpeg" className="h-14 w-14" />
-        </div>
-      </div>
+    <div className="mb-4">
+      <input
+        type="text"
+        name="tarea"
+        value={taskDetails.tarea}
+        onChange={onInputChange}
+        placeholder="Descripción de la tarea"
+        className="w-full p-2 border border-gray-300 rounded mb-2"
+      />
     </div>
   );
 }
