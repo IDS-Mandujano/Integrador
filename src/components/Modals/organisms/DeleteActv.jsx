@@ -3,17 +3,18 @@ import ModalFooter from '../molecules/ModalFooter';
 import handleStatusCode from '../../../utils/messages';
 import { fetchData } from '../../../utils/fetch';
 
-function DeleteActv({ show, handleClose, item, id }) {
+function DeleteActv({ show, handleClose, item, id, fetchTareas }) {
   if (!show) return null;
 
-  const url = `${import.meta.env.VITE_LOCAL_API}/actividades/`
-  const token = localStorage.getItem("authToken")
+  const url = `${import.meta.env.VITE_LOCAL_API}/actividades/`;
+  const token = localStorage.getItem("authToken");
 
   const handleDelete = async () => {
     try {
       const response = await fetchData(url, 'DELETE', token, { IdActividad: id });
       handleStatusCode(response.status);
       if (response.status === 204) {
+        fetchTareas(); // Fetch tasks again to update the list
         handleClose();
       }
     } catch (error) {

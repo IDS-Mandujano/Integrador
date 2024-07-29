@@ -7,7 +7,7 @@ import Input from "../atoms/Input";
 import ParcialSelect from "../molecules/ParcialSelect";
 import handleStatusCode from "../../../utils/messages";
 
-function AddTarea({ show, handleClose, id }) {
+function AddTarea({ show, handleClose, id, fetchTareas }) {
   if (!show) return null;
 
   const url = `${import.meta.env.VITE_LOCAL_API}/actividades/`;
@@ -28,6 +28,7 @@ function AddTarea({ show, handleClose, id }) {
       const data = await fetchData(url, 'POST', token, { ...formData, IdGrupo: id });
       console.log("Respuesta del servidor: ", data.status);
       handleStatusCode(data.status);
+      fetchTareas();  // Llama a fetchTareas para actualizar la lista
       handleClose(false);
     } catch (error) {
       handleStatusCode(500);

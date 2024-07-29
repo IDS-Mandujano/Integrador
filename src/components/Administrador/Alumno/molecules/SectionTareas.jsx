@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { fetchData } from "../../../../utils/fetch";
 import Title from "../atoms/Title";
 import TareasContainer from "../molecules/TareasContainer";
-import Button from "../atoms/Button";
 import AddTarea from "../../../Modals/organisms/AddTarea";
 import AddTemario from "../../../Modals/organisms/AddTemario";
-import handleStatusCode from "../../../../utils/messages";
 
 function SectionTareas() {
   const [openAddTarea, setOpenAddTarea] = useState(false);
@@ -69,7 +67,7 @@ function SectionTareas() {
           <p className="text-gray-500">No hay actividades disponibles.</p>
         )}
       </div>
-      <AddTarea show={openAddTarea} handleClose={() => setOpenAddTarea(false)} id={id} />
+      <AddTarea show={openAddTarea} handleClose={() => setOpenAddTarea(false)} id={id} fetchTareas={fetchTareas} />
       <AddTemario show={openAddTemario} handleClose={() => setOpenAddTemario(false)} />
     </div>
   );

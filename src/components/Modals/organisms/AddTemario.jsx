@@ -2,7 +2,6 @@ import { useState } from "react";
 import ModalHeader from "../molecules/ModalHeader";
 import ModalFooter from "../molecules/ModalFooter";
 import Input from "../atoms/Input";
-import { fetchData } from "../../../utils/fetch";
 import handleStatusCode from "../../../utils/messages";
 
 function AddTemario({ show, handleClose}) {
