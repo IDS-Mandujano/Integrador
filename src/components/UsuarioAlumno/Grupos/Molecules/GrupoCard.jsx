@@ -4,12 +4,14 @@ import Text from "../Atoms/Text";
 import Image from "../Atoms/Image";
 import Button from "../Atoms/Button";
 
-function GrupoCard({ asignatura, grado, grupo, miembros }) {
+function GrupoCard({ asignatura, grado, grupo, miembros,id}) {
     const navigate = useNavigate();
 
     const handleInspect = (e) => {
         e.preventDefault();
         navigate("/Tareas");
+        sessionStorage.setItem('idGrupoAlumno',id)
+
         console.log("vista de detalles");
     };
 
