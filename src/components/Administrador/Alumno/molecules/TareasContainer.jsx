@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+  import { useState } from 'react';
 import Text from '../atoms/Text';
 import Image from '../atoms/Image';
 import File from '../atoms/File';
