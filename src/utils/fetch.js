@@ -3,7 +3,7 @@ export const fetchData = async (url, method, token, body = null) => {
     method,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': token,  // Usar el token directamente sin "Bearer"
+      'Authorization': token,
     },
   };
 
@@ -13,7 +13,7 @@ export const fetchData = async (url, method, token, body = null) => {
 
   try {
     const response = await fetch(url, options);
-    const status = response.status;  
+    const status = response.status;
     console.log('Response Status:', status);
 
     if (!response.ok) {
@@ -26,10 +26,10 @@ export const fetchData = async (url, method, token, body = null) => {
     if (contentType && contentType.includes('application/json')) {
       data = await response.json();
     } else {
-      data = await response.text(); 
+      data = await response.text();
     }
 
-    return { status, data }; 
+    return { status, data };
   } catch (error) {
     console.error('Fetch error:', error);
     return { status: 500, data: error.message };

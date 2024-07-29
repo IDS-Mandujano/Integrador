@@ -18,7 +18,6 @@ function SectionAlumnos() {
         const data = await fetchData(url,'POST',token, {Grado: grado, Grupo: grupo});
         setAlumnos(data.data);
       } catch (error) {
-        console.log('Error al obtener alumnos:', error);
         handleStatusCode(500)
       }
     };

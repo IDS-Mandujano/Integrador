@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
@@ -10,6 +10,7 @@ import Tareas from "./pages/Tareas"
 //import RouteProtectedAdmin from './pages/RouteProtectedAdmin'
 //import RouteProtectedAlumno from './pages/RouteProtectedAlumno';
 import UserContext from './context/userContext';
+import CalificarTarea from './components/Administrador/Tareas/organisms/CalificarTarea';
 
 function App() {
   const [user, setUser] = useState(
@@ -25,6 +26,7 @@ function App() {
             <Route path='/Home' element={<Home/>}/>
             <Route path='/Detalles' element={<GroupDetail/>}/>
             <Route path='/Agregar' element={<AgregarAlumno/>}/>
+            <Route path='/Calificar' element={<CalificarTarea/>}/>
           {/*</Route>*/}
           {/*<Route element={<RouteProtectedAlumno/>}>*/}
             <Route path='/Alumno' element={<VistaInscritos/>}/>

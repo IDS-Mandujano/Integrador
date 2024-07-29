@@ -13,8 +13,6 @@ function GrupoCard(props) {
   const [showOptions, setShowOptions] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
-  console.log('id grupo: ',props.IdGrupo)
-
   const handleInspect = (e) => {
     e.preventDefault();
     sessionStorage.setItem("Grado", props.grado);
