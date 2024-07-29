@@ -17,6 +17,7 @@ function GroupContainer() {
                 const response = await fetchData(url, 'POST', token, { Grado: user.grado, Grupo: user.grupo });
                 if (response && Array.isArray(response.data)) {
                     setGrupos(response.data);
+                    console.log('Fetched groups:', response.data);
                 } else {
                     console.error('Unexpected response format:', response);
                     setGrupos([]); // set an empty array if response format is unexpected
@@ -27,6 +28,7 @@ function GroupContainer() {
             }
         };
 
+        console.log('User context in GroupContainer:', user);
         getGrupos();
     }, [token, user.grado, user.grupo]);
 

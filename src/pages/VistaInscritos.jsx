@@ -4,7 +4,7 @@ import HeaderAlum from "../components/UsuarioAlumno/HeaderAlumno/Organisms/Heade
 function VistaInscritos() {
     return (
         <div className="min-h-screen bg-gray-100">
-            <HeaderAlum/>
+            <HeaderAlum />
             <div className="container mx-auto p-4">
                 <GroupContainer />
             </div>
