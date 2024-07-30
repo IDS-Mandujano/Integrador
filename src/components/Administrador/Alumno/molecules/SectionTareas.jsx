@@ -52,16 +52,8 @@ function SectionTareas() {
       <div className="flex flex-wrap gap-6 mt-12">
         {Array.isArray(tareas) && tareas.length > 0 ? (
           tareas.map((item, index) => (
-            <TareasContainer 
-              key={index} 
-              id={item.IdActividad} 
-              IdGrupo={id} 
-              parcial={item.Parcial}
-              title={item.Tema} 
-              subtitle={item.Subtema} 
-              description={item.Descripcion} 
-              fetchTareas={fetchTareas}
-            />
+            <TareasContainer key={index} id={item.IdActividad} IdGrupo={id} parcial={item.Parcial}
+            title={item.Tema} subtitle={item.Subtema} description={item.Descripcion} fetchTareas={fetchTareas}/>
           ))
         ) : (
           <p className="text-gray-500">No hay actividades disponibles.</p>

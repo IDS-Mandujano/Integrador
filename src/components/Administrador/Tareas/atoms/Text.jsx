@@ -1,5 +1,5 @@
-function Text({ text, className }) {
-  return <p className={className}>{text}</p>;
+function Text ({className,text}){
+    return <p className={className}>{text}</p>
 }
 
-export default Text;
+export default Text

@@ -1,53 +1,30 @@
-// ModalTareas.jsx
-import React, { useState } from 'react';
+import ModalHeader from "../molecules/ModalHeader";
+import ModalFooter from "../molecules/ModalFooter";
+import Input from "../atoms/Input";
+import Text from "../atoms/Text";
 
-const ModalTareas = ({ task, onClose, token }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false);
-  
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
-  const handleSubmit = async () => {
-    if (!selectedFile) {
-      console.error('No file selected');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('idActividad', task.IdActividad);
-    formData.append('matricula', 'tu_matricula_aqui'); // Asegúrate de que `matricula` se obtiene y envía correctamente
-    formData.append('idGrupo', 'tu_idGrupo_aqui'); // Asegúrate de que `idGrupo` se obtiene y envía correctamente
-
-    try {
-      const response = await fetch('http://localhost:3000/api/tarea', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Tarea creada:', result);
-        setIsTaskSubmitted(true);
-        onClose();
-      } else {
-        console.error('Error creando la tarea:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error creando la tarea:', error);
-    }
-  };
+const ModalTareas = ({ task, show, handleClose }) => {
+  if (!show) return null;
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleSubmit}>Submit</button>
-      {isTaskSubmitted && <p>Tarea enviada con éxito.</p>}
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div
+        className="absolute inset-0 bg-gray-600 opacity-50"
+        onClick={handleClose}
+      ></div>
+      <div className="relative bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-lg mx-auto z-10">
+        <ModalHeader title="Subir tarea" text="Seleccione un archivo PDF" image="Icons/upload_pdf.jpeg"/>
+        <div className="mt-4 space-y-4">
+          <Text text={`Tema: ${task.Tema}`} className="text-gray-800 font-semibold text-lg"/>
+          <Text text={`Descripción: ${task.Descripcion}`} className="text-gray-600 text-sm"/>
+          <Input type="file" placeholder="Selecciona un archivo PDF" className="mt-2 border border-gray-300 rounded-lg p-2 w-full bg-gray-50"/>
+        </div>
+        <div className="mt-6 flex justify-end space-x-4">
+          <ModalFooter isTemario={false} action1="Agregar" action2="Cancelar"
+            action1S="bg-teal-500 text-white hover:bg-teal-600" action2S="bg-red-500 text-white hover:bg-red-600"
+            fetch={() => console.log('Agregar clicked')} handleClose={handleClose}/>
+        </div>
+      </div>
     </div>
   );
 };

@@ -28,7 +28,7 @@ function AddTarea({ show, handleClose, id, fetchTareas }) {
       const data = await fetchData(url, 'POST', token, { ...formData, IdGrupo: id });
       console.log("Respuesta del servidor: ", data.status);
       handleStatusCode(data.status);
-      fetchTareas();  // Llama a fetchTareas para actualizar la lista
+      fetchTareas();
       handleClose(false);
     } catch (error) {
       handleStatusCode(500);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchData } from '../utils/fetch';
+import Header from "../components/Header/organisms/Header"
 
 function Temario() {
     const token = localStorage.getItem('authToken');
@@ -12,7 +13,6 @@ function Temario() {
                 const response = await fetchData(`${import.meta.env.VITE_LOCAL_API}/temario`, 'GET', token);
                 if (response && Array.isArray(response.data)) {
                     setTemarios(response.data);
-                    console.log('Fetched temarios:', response.data);
                 } else {
                     console.error('Unexpected response format:', response);
                     setError('Unexpected response format');
@@ -29,6 +29,8 @@ function Temario() {
     }, [token]);
 
     return (
+        <div>
+        <Header/>
         <div className="p-6 bg-gray-100">
             <h2 className="text-2xl font-semibold mb-4">Temarios</h2>
             {error && <p className="text-red-500">{error}</p>}
@@ -41,6 +43,7 @@ function Temario() {
                     </div>
                 ))}
             </div>
+        </div>
         </div>
     );
 }

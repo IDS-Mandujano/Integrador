@@ -1,12 +1,11 @@
-function Input({ type, name, value, onChange, className, placeholder }) {
+function Input({ type, placeholder, value, onChange, className }) {
   return (
     <input
       type={type}
-      name={name}
+      placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={`border border-gray-300 p-2 rounded ${className}`}
-      placeholder={placeholder}
+      className={className}
     />
   );
 }

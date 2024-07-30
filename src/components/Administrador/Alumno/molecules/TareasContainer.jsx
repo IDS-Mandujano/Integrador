@@ -1,4 +1,5 @@
-  import { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Text from '../atoms/Text';
 import Image from '../atoms/Image';
 import File from '../atoms/File';
@@ -10,8 +11,16 @@ function TareasContainer(props) {
   const [openDelete, setOpen] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openContent, setContent] = useState(false)
+  const navigate = useNavigate('')
 
-  console.log("Id de la actividad: ", props.id)
+  const handleNavigate = (e) => {
+    e.preventDefault();
+    navigate(`/Calificar?title=${encodeURIComponent(props.title)}
+      &parcial=${encodeURIComponent(props.parcial)}
+      &subtitle=${encodeURIComponent(props.subtitle)}
+      &description=${encodeURIComponent(props.description)}`);
+  };
+  
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center mb-6 w-full">
@@ -26,7 +35,7 @@ function TareasContainer(props) {
       </div>
       <div className="flex justify-between w-full mt-4">
         <button onClick={() => setOpenUpdate(true)}><Image className="bg-teal-500 w-10 h-10" src="Icons/edit.png"/></button>
-        <button><Image src="Icons/assignment_turne.png" className="bg-blue-500 w-10 h-10"/></button>
+        <button onClick={handleNavigate}><Image src="Icons/assignment_turne.png" className="bg-blue-500 w-10 h-10"/></button>
         <button onClick={()=> setContent(true)}><Image src="Icons/content.png" className="w-10 h-10"/></button>
         <button onClick={() => setOpen(true)}><Image className="bg-red-500 w-10 h-10" src="Icons/delete.png"/></button>
       </div>

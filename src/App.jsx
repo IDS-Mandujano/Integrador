@@ -1,19 +1,22 @@
+import './App.css';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
+// import RouteProtectedAdmin from './pages/RouteProtectedAdmin';
+// import RouteProtectedAlumno from './pages/RouteProtectedAlumno';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import GroupDetail from './pages/GroupDetail';
 import AgregarAlumno from './pages/AgregarAlumno';
 import VistaInscritos from './pages/VistaInscritos';
 import Tareas from "./pages/Tareas"
-import RouteProtectedAlumno from './pages/RouteProtectedAlumno';
-import UserContext from './context/userContext';
 import Temario from './pages/Temario';
+import TareaDocente from './pages/TareaDocente'
+import UserContext from './context/userContext';
+
 
 function App() {
   const [user, setUser] = useState(
-    { usuario: '', grado: '1',grupo: 'D',role: '',
+    { usuario: '', grado: '',grupo: '',role: '',
     nombre: '',apellido_p: '',apellido_m : '', token: '' });
 
   return (
@@ -25,12 +28,13 @@ function App() {
             <Route path='/Home' element={<Home/>}/>
             <Route path='/Detalles' element={<GroupDetail/>}/>
             <Route path='/Agregar' element={<AgregarAlumno/>}/>
+            <Route path='/Calificar' element={<TareaDocente/>}/>
           {/* </Route> */}
-          <Route element={<RouteProtectedAlumno/>}>
+          {/* <Route element={<RouteProtectedAlumno/>}> */}
             <Route path='/Alumno' element={<VistaInscritos/>}/>
             <Route path='/Tareas' element={<Tareas/>}/>
             <Route path='/Temario' element={<Temario />} /> 
-          </Route>
+          {/* </Route> */}
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

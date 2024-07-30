@@ -13,12 +13,9 @@ function StudentContainer() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetchData(url, "POST", token, { Grado: user.grado, Grupo: user.grupo });
-        console.log("API Response:", response);
-        
+        const response = await fetchData(url, "POST", token, { Grado: user.grado, Grupo: user.grupo });        
         if (response.status === 200) {
           const data = response.data;
-          console.log("Fetched Students:", data);
           setStudents(data);
         } else {
           console.error("Error fetching students:", response.message);
