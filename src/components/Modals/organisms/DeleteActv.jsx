@@ -32,13 +32,9 @@ function DeleteActv({ show, handleClose, item, id, fetchTareas }) {
           text={`¿Estás seguro de que deseas eliminar el elemento ${item}?`}
         />
         <div className="mt-4 flex justify-end space-x-4">
-          <ModalFooter 
-            action1="Eliminar" 
-            action2="Cancelar" 
-            handleClose={handleClose} 
-            fetch={handleDelete}
-            action1S="bg-red-500 text-white" 
-            action2S="bg-gray-500 text-white"
+          <ModalFooter action1="Eliminar" action2="Cancelar" 
+            handleClose={handleClose} fetch={handleDelete}
+            action1S="bg-red-500 text-white" action2S="bg-gray-500 text-white"
           />
         </div>
       </div>

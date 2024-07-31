@@ -11,6 +11,7 @@ import VistaInscritos from './pages/VistaInscritos';
 import Tareas from "./pages/Tareas"
 import Temario from './pages/Temario';
 import TareaDocente from './pages/TareaDocente'
+import TemarioDocente from './pages/TemarioDocente';
 import UserContext from './context/userContext';
 
 
@@ -27,6 +28,7 @@ function App() {
           {/* <Route element={<RouteProtectedAdmin/>}> */}
             <Route path='/Home' element={<Home/>}/>
             <Route path='/Detalles' element={<GroupDetail/>}/>
+            <Route path='/Temarios' element={<TemarioDocente/>}/>
             <Route path='/Agregar' element={<AgregarAlumno/>}/>
             <Route path='/Calificar' element={<TareaDocente/>}/>
           {/* </Route> */}
