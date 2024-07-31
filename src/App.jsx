@@ -13,6 +13,7 @@ import Temario from './pages/Temario';
 import TareaDocente from './pages/TareaDocente'
 import TemarioDocente from './pages/TemarioDocente';
 import UserContext from './context/userContext';
+import ContenidoDocente from './pages/ContenidoDocente';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           {/* <Route element={<RouteProtectedAdmin/>}> */}
             <Route path='/Home' element={<Home/>}/>
             <Route path='/Detalles' element={<GroupDetail/>}/>
+            <Route path='/Contenidos' element={<ContenidoDocente/>}/>
             <Route path='/Temarios' element={<TemarioDocente/>}/>
             <Route path='/Agregar' element={<AgregarAlumno/>}/>
             <Route path='/Calificar' element={<TareaDocente/>}/>
@@ -35,7 +37,7 @@ function App() {
           {/* <Route element={<RouteProtectedAlumno/>}> */}
             <Route path='/Alumno' element={<VistaInscritos/>}/>
             <Route path='/Tareas' element={<Tareas/>}/>
-            <Route path='/Temario' element={<Temario />} /> 
+            <Route path='/Temario' element={<Temario />}/> 
           {/* </Route> */}
         </Routes>
       </UserContext.Provider>

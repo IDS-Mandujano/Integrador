@@ -20,11 +20,18 @@ function TareasContainer(props) {
       &subtitle=${encodeURIComponent(props.subtitle)}
       &description=${encodeURIComponent(props.description)}`);
   };
+
+  const handleContent = (e) => {
+    e.preventDefault()
+    navigate("/Contenidos")
+    sessionStorage.setItem('idActForContenido',props.id)
+  }
   
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center mb-6 w-full">
       <div className="flex-1 w-full">
+        <button onClick={handleContent}>Contenido</button>
         <div className="text-center mb-4">
           <Text text={`${props.parcial} parcial` || ""} className="font-bold text-2xl mb-2 text-teal-700"/>
           <Text text={props.title} className="font-bold text-xl mb-2 text-gray-800"/>

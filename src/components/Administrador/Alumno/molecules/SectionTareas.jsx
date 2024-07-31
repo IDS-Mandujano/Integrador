@@ -44,7 +44,6 @@ function SectionTareas() {
       <div className="flex justify-end space-x-4 mb-6">
         <Button text="Agregar Tarea" onClick={() => setOpenAddTarea(true)} className={style}/>
         <Button text="Agregar Temario" onClick={() => setOpenAddTemario(true)} className={style}/>
-        <Button text="Contenido" onClick={() => console.log("Vista contenido")} className={style}/>
       </div>
 
       <div className="flex flex-wrap gap-6 mt-6">
