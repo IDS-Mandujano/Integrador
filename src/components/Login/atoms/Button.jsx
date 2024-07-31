@@ -1,6 +1,9 @@
-
-function Button(props){
-    return <button className={props.style} onClick={props.onClick}>{props.text}</button>
+function Button(props) {
+    return (
+        <button type="button" onClick={props.onClick} className="bg-teal-600 w-full p-2 text-white rounded" >
+            {props.text}
+        </button>
+    );
 }
 
-export default Button
+export default Button;

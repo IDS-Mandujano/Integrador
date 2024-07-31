@@ -1,5 +1,5 @@
-function Text({text,style}){
-    return <p className={style}>{text}</p>
+function Text ({text}){
+    return <p>{text}</p>
 }
 
 export default Text

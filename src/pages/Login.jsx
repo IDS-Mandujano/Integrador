@@ -1,12 +1,11 @@
-import FormContainer from "../components/Login/organisms/FormContainer"
-import './login.css'
+import ContainerForm from "../components/Login/organisms/ContainerForm";
 
 function Login(){
-    return (
-        <div id="login" className="flex w-100 h-svh justify-center items-center">
-            <FormContainer/>
+    return(
+        <div className="flex w-full h-screen justify-center items-center">
+             <ContainerForm/>
         </div>
     )
 }
 
-export default Login
+export default Login;
