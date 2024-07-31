@@ -5,8 +5,10 @@ import handleStatusCode from "../../../../utils/messages";
 
 function SectionTemarios() {
   const token = localStorage.getItem('authToken');
-  const id = sessionStorage.getItem('idGrupoAlumno')
+  const id = sessionStorage.getItem('idGrupo');
   const [temarios, setTemarios] = useState([]);
+
+  console.log("Id del grupo para temario: ",id);
 
   useEffect(() => {
     const fetchTemarios = async () => {
@@ -15,7 +17,6 @@ function SectionTemarios() {
         if (response && Array.isArray(response.data)) {
           setTemarios(response.data);
         } else {
-          handleStatusCode(response.status);
           setTemarios([]);
         }
       } catch (error) {
@@ -29,11 +30,15 @@ function SectionTemarios() {
 
   return (
     <div className="p-6 bg-gray-100">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {temarios.map((item, index) => (
-          <TemariosCard  key={index} filename={item.filename} idGrupo={item.idGrupo}  path={item.path}/>
-        ))}
-      </div>
+      {temarios.length === 0 ? (
+        <p className="text-gray-500">No hay temarios disponibles.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {temarios.map((item, index) => (
+            <TemariosCard key={index} filename={item.filename} idGrupo={item.idGrupo} path={item.path} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

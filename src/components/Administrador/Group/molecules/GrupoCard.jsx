@@ -20,6 +20,12 @@ function GrupoCard(props) {
     navigate("/Detalles");
   };
 
+  const handleTemario = (e) => {
+    e.preventDefault()
+    navigate("/Temarios")
+    sessionStorage.setItem("IdGrupoForTemario", props.IdGrupo);
+  }
+
   return (
     <div className="relative bg-white rounded-lg shadow-md overflow-hidden">
       <button onClick={() => setShowOptions(!showOptions)} className="absolute top-4 right-12 text-gray-500 hover:text-gray-700">
@@ -36,10 +42,11 @@ function GrupoCard(props) {
         </div>
         <div className="flex items-center h-1/4">
           <Image image="Icons/group.png" className="size-8 mr-4 bg-teal-500 rounded-sm" />
-          <Text text={`Miembros: --`} />
+          <Text text={`Miembros: 32`} />
         </div>
-        <div className="flex justify-end">
-          <Button onClick={handleInspect} className="bg-teal-800 text-white px-4 py-2 rounded" text="Inspeccionar" />
+        <div className="flex justify-end mt-2">
+          <Button onClick={handleInspect} className="bg-teal-800 text-white px-4 py-2 rounded" text="Inspeccionar"/>
+          <Button onClick={handleTemario} className="bg-blue-500 text-white px-4 py-2 rounded ml-4"text="Temario"/>
         </div>
       </div>
       <EditGroupModal show={showEditModal} handleClose={() => setShowEditModal(false)} id={props.IdGrupo} />

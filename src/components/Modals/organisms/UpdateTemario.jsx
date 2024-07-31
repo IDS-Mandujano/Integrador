@@ -3,12 +3,13 @@ import ModalHeader from "../molecules/ModalHeader";
 import ModalFooter from "../molecules/ModalFooter";
 import Input from "../atoms/Input";
 import handleStatusCode from "../../../utils/messages";
-import { fetchData } from "../../../utils/fetch";
 
 function UpdateTemario({ show, handleClose, idTemario }) {
   const [archivo, setArchivo] = useState(null);
   const [error, setError] = useState("");
-  const id = sessionStorage.getItem('idGrupoAlumno')
+  const id = sessionStorage.getItem('IdGrupoForTemario')
+  console.log("Id del grupo para temario: ",id);
+  console.log("Id del temario a editar: ",idTemario);
 
   if (!show) return null;
 

@@ -5,17 +5,16 @@ import handleStatusCode from "../../../../utils/messages";
 
 function SectionTemarios() {
   const token = localStorage.getItem('authToken');
-  const id = sessionStorage.getItem('idGrupoAlumno')
   const [temarios, setTemarios] = useState([]);
+  const id = sessionStorage.getItem('IdGrupoForTemario');
 
   useEffect(() => {
     const fetchTemarios = async () => {
       try {
-        const response = await fetchData(`${import.meta.env.VITE_LOCAL_API}/temario/obtener`, 'POST', token, {idGrupo : id});
+        const response = await fetchData(`${import.meta.env.VITE_LOCAL_API}/temario/obtener`, 'POST', token, { idGrupo: id });
         if (response && Array.isArray(response.data)) {
           setTemarios(response.data);
         } else {
-          handleStatusCode(response.status);
           setTemarios([]);
         }
       } catch (error) {
@@ -29,11 +28,15 @@ function SectionTemarios() {
 
   return (
     <div className="p-6 bg-gray-100">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {temarios.map((item, index) => (
-          <TemariosCard  key={index} filename={item.filename} idGrupo={item.idGrupo}  path={item.path} id={item.id}/>
-        ))}
-      </div>
+      {temarios.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {temarios.map((item, index) => (
+            <TemariosCard key={index} filename={item.filename} idGrupo={item.idGrupo} path={item.path} id={item.id} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500">No hay temarios disponibles.</p>
+      )}
     </div>
   );
 }
