@@ -8,6 +8,7 @@ function TaskContainer() {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
   const token = localStorage.getItem("authToken");
   const url = `${import.meta.env.VITE_LOCAL_API}/actividades/obtenerActividadesPorGrupo`;
   
@@ -48,20 +49,13 @@ function TaskContainer() {
       <div className="overflow-y-auto flex-1 p-2">
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <TaskItem
-              key={task.IdActividad}
-              tema={task.Tema}
-              descripcion={task.Descripcion}
-              onClick={() => handleTaskClick(task)}
-            />
+            <TaskItem key={task.IdActividad} tema={task.Tema} descripcion={task.Descripcion} onClick={() => handleTaskClick(task)}/>
           ))
         ) : (
           <p className="text-center">No hay tareas asignadas.</p>
         )}
       </div>
-      {showModal && selectedTask && (
-        <ModalTareas task={selectedTask} show={showModal} handleClose={handleCloseModal}/>
-      )}
+      {showModal && selectedTask && (<ModalTareas task={selectedTask} show={showModal} handleClose={handleCloseModal}/>)}
     </div>
   );
 }

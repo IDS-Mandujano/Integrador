@@ -4,21 +4,19 @@ import Text from "../Atoms/Text";
 import Image from "../Atoms/Image";
 import Button from "../Atoms/Button";
 
-function GrupoCard({ asignatura, grado, grupo, miembros, id }) {
+function GrupoCard({asignatura, grado, grupo, miembros, id}) {
     const navigate = useNavigate();
 
     const handleInspect = (e) => {
         e.preventDefault();
         navigate("/Tareas");
         sessionStorage.setItem('idGrupoAlumno', id);
-        console.log("Vista de detalles");
     };
 
     const handleVerTemario = (e) => {
         e.preventDefault();
         navigate("/Temario");
         sessionStorage.setItem('idGrupo', id);
-        console.log("Vista del temario");
     };
 
     return (

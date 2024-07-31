@@ -1,129 +1,56 @@
 import { useState } from "react";
-import { jsPDF } from "jspdf";
-import ContentField from "../molecules/ContentField";
-import ModalFooter from "../molecules/ModalFooter";
+import { generateContent, generatePdf, savePdf, uploadPdf } from "../../../services/pdfService";
+import ContentType from "../molecules/ContentType";
+import ContentForm from "../molecules/ContentForm";
 import ModalHeader from "../molecules/ModalHeader";
 
-const API_KEY = 'sk-None-jkYSerUlpddwTE9i9CaKT3BlbkFJFH4EJZUZ7AjjDJrEUdFz';
-
-function AddContent({ show, handleClose, idActividad }) {
-  const [formData, setFormData] = useState({ file: null, content: "" });
+function AddContentModal({ show, handleClose, idActividad }) {
+  const [formData, setFormData] = useState({ file: null });
   const [contentType, setContentType] = useState("");
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
+  const [pdfBlob, setPdfBlob] = useState(null);
   const [pdfUrl, setPdfUrl] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData(prev => ({ ...prev, [name]: files ? files[0] : value }));
-  };
+  const handleChange = (e) => 
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.files ? e.target.files[0] : e.target.value }));
 
   const handleContentTypeChange = (type) => {
     setContentType(type);
-    setFormData({ file: null, content: "" });
+    setFormData({ file: null });
     setPdfUrl('');
   };
 
-  const generateContent = async () => {
-    try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
-          messages: [{ role: 'user', content: input }],
-          max_tokens: 500
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json();
-      setResponse(data.choices[0].message.content);
-      setFormData(prev => ({ ...prev, content: data.choices[0].message.content }));
-    } catch (error) {
-      console.error('Error al hacer la petición:', error);
-      setResponse('Ocurrió un error al procesar la solicitud.');
-    }
-  };
-
-  const generatePdf = async () => {
-    const idActividadStr = String(idActividad || '').trim();
-    
-    if (!idActividadStr) {
-      console.error('ID Actividad no válido');
-      return;
-    }
-  
-    const doc = new jsPDF();
-    const margin = 10;
-    const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
-    const text = doc.splitTextToSize(response, maxLineWidth);
-  
-    doc.text(text, margin, margin);
-  
-    const pdfBlob = doc.output('blob');
-    const pdfUrl = URL.createObjectURL(pdfBlob);
-    setPdfUrl(pdfUrl);
-  
-    const formDataToSend = new FormData();
-    formDataToSend.append('archivo', pdfBlob, 'contenido.pdf');
-    formDataToSend.append('idActividad', idActividadStr);
-  
-    try {
-      const uploadResponse = await fetch(`${import.meta.env.VITE_LOCAL_API}/tarea/`, {
-        method: 'POST',
-        body: formDataToSend,
-      });
-  
-      if (!uploadResponse.ok) {
-        throw new Error(`Error al subir el archivo: ${uploadResponse.statusText}`);
-      }
-  
-      console.log("Archivo PDF subido con éxito.");
-    } catch (error) {
-      console.error('Error al subir el archivo:', error);
-    }
-  };
-  
-
-  const uploadPdf = async () => {
-    if (!formData.file) {
-      console.error('No hay archivo para subir');
-      return;
-    }
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('tarea', formData.file);
-    formDataToSend.append('idActividad', idActividad);
-
-    try {
-      const uploadResponse = await fetch(`${import.meta.env.VITE_LOCAL_API}/tarea/`, {
-        method: 'POST',
-        body: formDataToSend,
-      });
-
-      if (!uploadResponse.ok) {
-        throw new Error(`Error al subir el archivo: ${uploadResponse.statusText}`);
-      }
-
-      console.log("Archivo PDF subido con éxito.");
-    } catch (error) {
-      console.error('Error al subir el archivo:', error);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (contentType === "file") {
-      uploadPdf();
-    } else if (contentType === "content") {
-      generatePdf();
+      try {
+        await uploadPdf(formData.file, idActividad);
+        handleClose();
+      } catch (error) {
+        console.error("Error subiendo el PDF:", error);
+      }
+    } else {
+      try {
+        const generatedContent = await generateContent(input);
+        setResponse(generatedContent);
+        const { pdfBlob, pdfUrl } = generatePdf(generatedContent, idActividad);
+        setPdfBlob(pdfBlob);
+        setPdfUrl(pdfUrl);
+      } catch (error) {
+        console.error("Error generando el contenido o el PDF:", error);
+      }
+    }
+  };
+
+  const handleSavePdf = async () => {
+    try {
+      if (pdfBlob) {
+        await savePdf(pdfBlob, idActividad);
+        handleClose();
+      }
+    } catch (error) {
+      console.error("Error guardando el PDF:", error);
     }
   };
 
@@ -132,69 +59,17 @@ function AddContent({ show, handleClose, idActividad }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="fixed inset-0 bg-black opacity-25" onClick={handleClose}></div>
-      <div className="bg-white p-6 rounded-lg shadow-lg z-10 max-w-lg mx-auto">
-        <ModalHeader className={"bg-teal-500"} image="Icons/content.png" title="Agregar Contenido" />
-        <div className="mb-4 flex space-x-4">
-          <button onClick={() => handleContentTypeChange("file")}
-            className={`py-2 px-4 rounded ${contentType === "file" ? "bg-teal-500 text-white" : "bg-gray-200"}`}>Subir PDF</button>
-          <button onClick={() => handleContentTypeChange("content")}
-            className={`py-2 px-4 rounded ${contentType === "content" ? "bg-teal-500 text-white" : "bg-gray-200"}`}>Generar Contenido
-          </button>
-        </div>
-        <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-          <ContentField contentType={contentType} formData={formData} handleChange={handleChange} />
-          {contentType === "content" && (
-            <div className="mt-4">
-              <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Escribe tu mensaje..." className="border border-teal-500 w-full px-3 py-2 my-2 rounded"
-              />
-              <button
-                onClick={generateContent}
-                className="py-2 px-4 bg-teal-500 text-white rounded"
-              >
-                Generar
-              </button>
-              <div className="mt-4">
-                <h2 className="font-semibold text-gray-700">Respuesta:</h2>
-                <p className="border border-teal-500 w-full px-3 py-2 my-2 rounded overflow-auto max-h-32">{response}</p>
-                <button
-                  type="button"
-                  onClick={generatePdf}
-                  className="py-2 px-4 bg-teal-500 text-white rounded mt-2"
-                >
-                  Generar Contenido PDF
-                </button>
-                {pdfUrl && (
-                  <div className="mt-4">
-                    <a
-                      href={pdfUrl}
-                      download="contenido.pdf"
-                      className="py-2 px-4 bg-teal-500 text-white rounded inline-block"
-                    >
-                      Descargar PDF
-                    </a>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-          {contentType === "file" && (
-            <div className="mt-4">
-              <button
-                type="submit"
-                className="py-2 px-4 bg-teal-500 text-white rounded mt-2"
-              >
-                Subir PDF
-              </button>
-            </div>
-          )}
-        </form>
-        <div className="mt-4 flex justify-end space-x-4">
-          <ModalFooter isTemario={false} action1="Guardar" action2="Cancelar" handleClose={handleClose} fetch={handleSubmit} 
-          action1S="bg-teal-500 text-white" action2S="bg-red-500 text-white"/>
-        </div>
+      <div className="bg-white p-6 rounded-lg shadow-lg z-10 w-full max-w-3xl mx-auto overflow-auto max-h-[80vh]">
+        <ModalHeader className="bg-teal-500" image="Icons/content.png" title="Agregar Contenido" />
+        <ContentType contentType={contentType} onContentTypeChange={handleContentTypeChange} 
+          handleClose={handleClose} showCancel={contentType === "file"}/>
+        
+        <ContentForm contentType={contentType} formData={formData} handleChange={handleChange} input={input} 
+          setInput={setInput} handleSubmit={handleSubmit} response={response}  
+          pdfUrl={pdfUrl} handleSavePdf={handleSavePdf} handleClose={handleClose}/>
       </div>
     </div>
   );
 }
 
-export default AddContent;
+export default AddContentModal;
