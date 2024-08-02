@@ -7,7 +7,7 @@ import Label from "../atoms/Label";
 import Input from "../atoms/Input";
 import handleStatusCode from '../../../utils/messages';
 
-function EditGroup({ show, handleClose, handleSave, id }) {
+function EditGroup({ show, handleClose, id }) {
   const url = `${import.meta.env.VITE_LOCAL_API}/grupos/`;
   const token = localStorage.getItem('authToken');
   const [formData, setFormData] = useState({});
@@ -52,7 +52,7 @@ function EditGroup({ show, handleClose, handleSave, id }) {
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="fixed inset-0 bg-gray-600 opacity-50" onClick={handleClose}></div>
       <div className="bg-white p-6 rounded-lg shadow-lg z-10 max-w-md mx-auto">
-        <ModalHeader image="Icons/edit.png" className="bg-teal-500" />
+        <ModalHeader image="Icons/edit.png" className="bg-teal-500"/>
         <form>
           {inputFields.map((item, index) => (
             <div key={index} className="mb-5">

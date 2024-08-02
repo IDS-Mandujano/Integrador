@@ -1,15 +1,30 @@
 import { jsPDF } from "jspdf";
 
-const API_KEY = `${import.meta.env.VITE_KEY_AI}`;
+const API_KEY = import.meta.env.VITE_KEY_AI;
+const API_URL = import.meta.env.VITE_AI_URL;
+const LOCAL_API_URL = import.meta.env.VITE_LOCAL_API;
 
 export const generateContent = async (input) => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_AI_URL}`, {
+    const res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
-      body: JSON.stringify({ model: 'gpt-3.5-turbo', messages: [{ role: 'user', content: input }], max_tokens: 500 })
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: input }],
+        max_tokens: 500
+      })
     });
+    
+    if (res.status === 401) {
+      throw new Error('No autorizado. Verifica tu API Key.');
+    }
+    
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    
     const { choices } = await res.json();
     const content = choices[0].message.content;
     
@@ -41,10 +56,11 @@ export const savePdf = async (pdfBlob, idActividad) => {
   formDataToSend.append('idActividad', idActividad);
   
   try {
-    const uploadResponse = await fetch(`${import.meta.env.VITE_LOCAL_API}/contenido/`, {
+    const uploadResponse = await fetch(`${LOCAL_API_URL}/contenido/`, {
       method: 'POST',
       body: formDataToSend,
     });
+    
     if (!uploadResponse.ok) throw new Error(`Error al subir el archivo: ${uploadResponse.statusText}`);
   } catch (error) {
     console.error('Error al subir el archivo:', error);
@@ -60,10 +76,11 @@ export const uploadPdf = async (file, idActividad) => {
   formDataToSend.append('idActividad', idActividad);
 
   try {
-    const uploadResponse = await fetch(`${import.meta.env.VITE_LOCAL_API}/contenido/`, {
+    const uploadResponse = await fetch(`${LOCAL_API_URL}/contenido/`, {
       method: 'POST',
       body: formDataToSend,
     });
+    
     if (!uploadResponse.ok) throw new Error(`Error al subir el archivo: ${uploadResponse.statusText}`);
   } catch (error) {
     console.error('Error al subir el archivo:', error);

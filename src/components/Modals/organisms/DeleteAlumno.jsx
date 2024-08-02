@@ -3,23 +3,23 @@ import ModalHeader from '../molecules/ModalHeader';
 import ModalFooter from '../molecules/ModalFooter';
 import handleStatusCode from '../../../utils/messages';
 
-function DeleteModal({ show, handleClose, item, id }) {
+function DeleteAlumno({ show, handleClose, item, id }) {
   if (!show) return null;
 
-  const url = `${import.meta.env.VITE_LOCAL_API}/grupos`;
+  const url = `${import.meta.env.VITE_LOCAL_API}/alumnos`;
   const token = localStorage.getItem('authToken');
 
   const onDelete = async () => {
     try {
-      const response = await fetchData(url, 'DELETE', token, { IdGrupo: id });
+      const response = await fetchData(url, 'DELETE', token, { Matricula: id });
       handleStatusCode(response.status);
       if (response.status === 200 || response.status === 204) {
-        handleClose(); // Cierra el modal si la eliminación es exitosa
+        handleClose();
       }
     } catch (error) {
-      console.error("Error al eliminar el grupo:", error);
+      console.error("Error al eliminar el alumno:", error);
       handleStatusCode(500);
-      handleClose(); // Asegúrate de que handleClose() se llame también en caso de error
+      handleClose();
     }
   };
 
@@ -49,4 +49,4 @@ function DeleteModal({ show, handleClose, item, id }) {
   );
 }
 
-export default DeleteModal;
+export default DeleteAlumno;

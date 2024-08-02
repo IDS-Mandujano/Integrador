@@ -5,7 +5,7 @@ import Image from "../atoms/Image";
 import Button from "../atoms/Button";
 import handleStatusCode from "../../../../utils/messages";
 import EditModal from "../../../Modals/organisms/EditModal";
-import DeleteModal from "../../../Modals/organisms/DeleteModal";
+import DeleteAlumno from "../../../Modals/organisms/DeleteAlumno";
 
 function AlumnoContainer(props) {
   const [isUpdateOpen, setUpdateOpen] = useState(false);
@@ -41,7 +41,7 @@ function AlumnoContainer(props) {
         className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"/>
       </div>
       <EditModal isUpdateOpen={isUpdateOpen} handleClose={() => setUpdateOpen(false)} id={props.matricula}/>
-      <DeleteModal show={isDeleteOpen} handleClose={() => setOpen(false)} handleDelete={handleDelete} item={props.name}/>
+      <DeleteAlumno show={isDeleteOpen} handleClose={() => setOpen(false)} handleDelete={handleDelete} item={props.name} id={props.matricula} />
     </div>
   );
 }
